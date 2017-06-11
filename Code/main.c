@@ -1,4 +1,4 @@
-//#include "driverlib.h"
+#include "driverlib.h"
 #include "msp430fr5969.h"
 #include <stdio.h>
 #include <stdint.h>
@@ -7,7 +7,8 @@
 #include <string.h>
 
 //#define   Num_of_Results   8
-volatile uint8_t test;
+volatile uint8_t Charge_Bat_Num;
+volatile uint8_t Discharge_Bat_Num;
 unsigned long ADC_ResultA7 = 0;
 unsigned long ADC_ResultA10 = 0;
 //volatile unsigned char TXData[10]={0};
@@ -39,13 +40,13 @@ void main(void)
       printf("A10 = %d\n",ADC_ResultA10);*/
       //  P1OUT ^= 0x01;
       //__delay_cycles(100000);
-      if(UCA1IFG & UCTXIFG){
+   /*   if(UCA1IFG & UCTXIFG){
       sprintf(outbuffer, "%d \n \n \n \n \n ",TXData);
       UCA1TXBUF = outbuffer;                     // Load data onto buffer
-      __delay_cycles(5000);
+      __delay_cycles(5000);*/
       }
   }
-}
+
   /*
 #pragma vector=ADC12_VECTOR
 __interrupt void ADC12ISR (void)
@@ -112,41 +113,40 @@ __interrupt void Port_1(void)
             while (ADC12CTL1 & ADC12BUSY);
             ADC_ResultA7 = ADC12MEM0;
             ADC_ResultA10 = ADC12MEM1;
+            P1OUT ^= BIT0;/* + BIT3 + BIT4 + BIT5; */             // Toggle P1.0
+            if(Charge_Bat_Num == 0){
+                P1OUT &= ~BIT4;
+                P1OUT &= ~BIT5;
+                printf("Charging Battery number %d \n", Charge_Bat_Num);
+                Charge_Bat_Num = 1;
+            }
+            else if(Charge_Bat_Num == 1){
+                P1OUT |= BIT4;
+                P1OUT &= ~BIT5;
+                printf("Charging Battery number %d \n", Charge_Bat_Num);
+                Charge_Bat_Num = 2;
+            }
+            else if(Charge_Bat_Num == 2){
+                P1OUT |= BIT5;
+                P1OUT &= ~BIT4;
+                printf("Charging Battery number %d \n", Charge_Bat_Num);
+                Charge_Bat_Num = 3;
+            }
+            else if(Charge_Bat_Num == 3){
+                P1OUT |= BIT5;
+                P1OUT |= BIT4;
+                printf("Charging Battery number %d \n", Charge_Bat_Num);
+                Charge_Bat_Num = 0;
+            }
+
             printf("A7 = %d\n",ADC_ResultA7);
             printf("A10 = %d\n",ADC_ResultA10);
-            P1OUT ^= BIT0;/* + BIT3 + BIT4 + BIT5; */             // Toggle P1.0
-            if(test == 0){
-                P1OUT &= ~BIT4;
-                P1OUT &= ~BIT5;
-                P3OUT &= ~BIT4;
-                P4OUT &= ~BIT3;
-                printf("Charging Battery number %d \n", test);
-                test = 1;
-            }
-            else if(test == 1){
-                P1OUT |= BIT4;
-                P1OUT &= ~BIT5;
-                P3OUT |= BIT4;
-                P4OUT &= ~BIT3;
-                printf("Charging Battery number %d \n", test);
-                test = 2;
-            }
-            else if(test == 2){
-                P1OUT |= BIT5;
-                P1OUT &= ~BIT4;
-                P4OUT |= BIT3;
-                P3OUT &= ~BIT4;
-                printf("Charging Battery number %d \n", test);
-                test = 3;
-            }
-            else if(test == 3){
-                P1OUT |= BIT5;
-                P1OUT |= BIT4;
-                P3OUT |= BIT4;
-                P4OUT |= BIT3;
-                printf("Charging Battery number %d \n", test);
-                test = 0;
-            }
+
+          //  if(UCA1IFG & UCTXIFG){
+           //      sprintf(outbuffer, "A7 is %d \n A10 is %d \n \n \n \n ",ADC_ResultA7,ADC_ResultA7);
+          //       UCA1TXBUF = outbuffer;                     // Load data onto buffer
+            __delay_cycles(5000);
+          //  }
            // P1OUT |= BIT5;
             P1IFG &= ~BIT1;           // P1.1 interrupt flag cleared
             break;
@@ -167,17 +167,80 @@ __interrupt void Port_1(void)
     }
 }
 
+            /********************************************************************************************/
+
+#pragma vector=PORT4_VECTOR
+__interrupt void Port_4(void)
+{
+    switch (__even_in_range(P4IV,P4IV_P4IFG7))
+    {
+    case P4IV_NONE:                                 /*NONE  */
+    break;
+    case P4IV_P4IFG0:                              /* P4.0 */
+    break;
+    case P4IV_P4IFG1:                             /* P4.1 */
+    break;
+    case P4IV_P4IFG2:                          /* P4.2 */
+    break;
+    case P4IV_P4IFG3:                          /* P4.3 */
+    break;
+    case P4IV_P4IFG4:                          /* P4.4 */
+    break;
+    case P4IV_P4IFG5:                         /* P4.5 */
+        P4OUT ^= BIT6;/* + BIT3 + BIT4 + BIT5; */             // Toggle P4.6
+        if(Discharge_Bat_Num == 0){
+            P3OUT &= ~BIT4;
+            P4OUT &= ~BIT3;
+            printf("Discharging Battery number %d \n", Discharge_Bat_Num);
+            Discharge_Bat_Num = 1;
+        }
+        else if(Discharge_Bat_Num == 1){
+            P3OUT |= BIT4;
+            P4OUT &= ~BIT3;
+            printf("Discharging Battery number %d \n", Discharge_Bat_Num);
+            Discharge_Bat_Num = 2;
+        }
+        else if(Discharge_Bat_Num == 2){
+            P4OUT |= BIT3;
+            P3OUT &= ~BIT4;
+            printf("Discharging Battery number %d \n", Discharge_Bat_Num);
+            Discharge_Bat_Num = 3;
+        }
+        else if(Discharge_Bat_Num == 3){
+            P3OUT |= BIT4;
+            P4OUT |= BIT3;
+            printf("Discharging Battery number %d \n", Discharge_Bat_Num);
+            Discharge_Bat_Num = 0;
+        }
+        P4IFG &= ~BIT5;           // P1.1 interrupt flag cleared
+    break;
+    case P4IV_P4IFG6:                        /* P1.6 */
+    break;
+    case P4IV_P4IFG7:                       /* P1.7 */
+    break;
+    default:
+        break;
+    }
+}
+
 void initiate(void){
 
     P1DIR |= BIT0 + BIT3 + BIT4 + BIT5;       // P1.0 = LED, P1.3 = MUX1 EN , P1.4 = MUX1 S0, P1.5 = MUX1 S1;
     P3DIR |= BIT0 + BIT4;                      //P3.0 = MUX1 EN , P3.4 = MUX1 S0;
-    P4DIR |= BIT3;                             // P4.3 = MUX1 S1;
+    P4DIR |= BIT3 + BIT6;                             // P4.3 = MUX1 S1;
     P1OUT &= ~BIT0;
+    P4OUT &= ~BIT6;
+
     P1REN |= BIT1;                            // Enable Pull-up resistor.
     P1OUT |= BIT1;                               // Set as pull up.
     P1IES |= BIT1;                               // interrupt high to low
     P1IE |= BIT1;                                // P1.3 interrupt enabled
     P1IFG &= ~BIT1;                            // P1.3 interrupt flag cleared
+    P4REN |= BIT5;                            // Enable Pull-up resistor.
+   P4OUT |= BIT5;                               // Set as pull up.
+   P4IES |= BIT5;                               // interrupt high to low
+   P4IE |= BIT5;                                // P1.3 interrupt enabled
+   P4IFG &= ~BIT5;                            // P1.3 interrupt flag cleared
     P1OUT &= ~BIT4;
     P1OUT &= ~BIT5;
     P3OUT &= ~BIT4;
@@ -201,18 +264,19 @@ void initiate(void){
       ADC12CTL1 |= ADC12SHP +ADC12CONSEQ_1;       // Use sampling timer, repeated sequence
       ADC12MCTL0 |= /*ADC12VRSEL_1 + */ ADC12INCH_7;                 // ref+=AVcc, channel = A7
       ADC12MCTL1 |= /*ADC12VRSEL_1 + */ ADC12INCH_10 + ADC12EOS;            // ref+=AVcc, channel = A10
-      test = 0 ;
+      Charge_Bat_Num = 0;
+      Discharge_Bat_Num = 0;
       //ADC12IER0 = 0x0480;                         // Enable ADC12IFG.7 & ADC12IFG.10
      //Configure USCI_A1 for UART mode
-      /*UCA1CTLW0 = UCSWRST;                      // Put eUSCI in reset
-    UCA1CTL1 |= UCSSEL__SMCLK;                // CLK = SMCLK
-    UCA1BR0 = 8;                              // 1000000/115200 = 8.68
-    UCA1MCTLW = 0xD600;                       // 1000000/115200 - INT(1000000/115200)=0.68
-    UCA1BR1 = 0;
-    UCA1CTL1 &= ~UCSWRST;    */                 // release from reset
-    while(!(REFCTL0 & REFGENRDY));            // Wait for reference generator to settle
-       ADC12CTL2 |= ADC12RES_2;                   //  12 bit resolution        // ADC12RES_x defines the conversion result resolution.
-       ADC12CTL0 |= ADC12ON;                       // Enable ADC12_B. This can only be modified if ADC12ENC = 0.
+      UCA1CTLW0 = UCSWRST;                      // Put eUSCI in reset
+      UCA1CTL1 |= UCSSEL__SMCLK;                // CLK = SMCLK
+      UCA1BR0 = 8;                              // 1000000/115200 = 8.68
+      UCA1MCTLW = 0xD600;                       // 1000000/115200 - INT(1000000/115200)=0.68
+      UCA1BR1 = 0;
+      UCA1CTL1 &= ~UCSWRST;                         // release from reset
+      while(!(REFCTL0 & REFGENRDY));            // Wait for reference generator to settle
+      ADC12CTL2 |= ADC12RES_2;                   //  12 bit resolution        // ADC12RES_x defines the conversion result resolution.
+      ADC12CTL0 |= ADC12ON;                       // Enable ADC12_B. This can only be modified if ADC12ENC = 0.
      __bis_SR_register(GIE);       // Enter LPM0, Enable interrupts
   //  __no_operation();                         // For debugger
 
