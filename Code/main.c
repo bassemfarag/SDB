@@ -5,7 +5,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
-
+//Bassem checking
 //#define   Num_of_Results   8
 volatile uint8_t Charge_Bat_Num;
 volatile uint8_t Discharge_Bat_Num;
