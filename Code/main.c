@@ -5,7 +5,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
-//Bassem checking
+
 //#define   Num_of_Results   8
 volatile uint8_t Charge_Bat_Num;
 volatile uint8_t Discharge_Bat_Num;
@@ -15,20 +15,26 @@ unsigned long ADC_ResultA10 = 0;
 volatile uint16_t TXData;
 volatile unsigned short indexT = 0;
 volatile unsigned short indexR = 0;
-volatile unsigned char outbuffer[10];
+volatile unsigned char outbuffer[10] = "HELLO EERR";
+volatile int counter  = 0;
+volatile int count = 0;
 void initiate (void);
+void circuit_logic(void);
+void uartSend(unsigned char *pucData, unsigned char ucLength);
+unsigned char sendString[] = "I am working ";
+unsigned char length=13;
 void main(void)
 {
     WDTCTL = WDTPW+WDTHOLD;                   // Stop watchdog timer
     PM5CTL0 &= ~LOCKLPM5;
-    FRCTL0 = 0xA500 | ((1) << 4);
-    CSCTL0_H = 0xA5;
-    CSCTL1 = DCOFSEL_6 | DCORSEL;
+    CSCTL0_H = CSKEY >> 8;
+    CSCTL1 = DCOFSEL_0;// | DCORSEL;
     CSCTL2 = SELA__VLOCLK | SELS__DCOCLK | SELM__DCOCLK;
     CSCTL3 = DIVA__1 | DIVS__1 | DIVM__1;
     CSCTL0_H = 0;
     initiate();
-
+  //  unsigned char sendString[] = "I am working ";
+    //unsigned char length=13;
  // P1OUT |= 0x01;
   while(1){
 
@@ -40,13 +46,14 @@ void main(void)
       printf("A10 = %d\n",ADC_ResultA10);*/
       //  P1OUT ^= 0x01;
       //__delay_cycles(100000);
-   /*   if(UCA1IFG & UCTXIFG){
-      sprintf(outbuffer, "%d \n \n \n \n \n ",TXData);
-      UCA1TXBUF = outbuffer;                     // Load data onto buffer
-      __delay_cycles(5000);*/
-      }
-  }
+     //    while(!(UCA1IFG & UCTXIFG));
+       //  sprintf(outbuffer, "%d \n \n \n \n \n ",TXData);
+       uartSend(sendString,length);                   // Load data onto buffer
+     //  __delay_cycles(5000);
 
+  }
+  return 0;
+}
   /*
 #pragma vector=ADC12_VECTOR
 __interrupt void ADC12ISR (void)
@@ -139,15 +146,18 @@ __interrupt void Port_1(void)
                 Charge_Bat_Num = 0;
             }
 
-            printf("A7 = %d\n",ADC_ResultA7);
-            printf("A10 = %d\n",ADC_ResultA10);
+                 printf("A7 = %d mV \n",ADC_ResultA7*3610/4095);
+                 printf("A10 = %d mV\n",ADC_ResultA10*3610/4095);
 
-          //  if(UCA1IFG & UCTXIFG){
-           //      sprintf(outbuffer, "A7 is %d \n A10 is %d \n \n \n \n ",ADC_ResultA7,ADC_ResultA7);
-          //       UCA1TXBUF = outbuffer;                     // Load data onto buffer
-            __delay_cycles(5000);
-          //  }
+
+            /*if(UCA1IFG & UCTXIFG){
+           //sprintf(outbuffer, "A7 is %d \n \n \n \n ",ADC_ResultA7);
+            UCA1TXBUF = outbuffer;                     // Load data onto buffer
+            printf(outbuffer);
+           // __delay_cycles(5000);
+            }*/
            // P1OUT |= BIT5;
+         //   uartSend(sendString,length);                   // Load data onto buffer
             P1IFG &= ~BIT1;           // P1.1 interrupt flag cleared
             break;
     case P1IV_P1IFG2:                          /* P1.2 */
@@ -164,8 +174,7 @@ __interrupt void Port_1(void)
     break;
     default:
         break;
-    }
-}
+    }}
 
             /********************************************************************************************/
 
@@ -222,6 +231,26 @@ __interrupt void Port_4(void)
         break;
     }
 }
+// Timer0_A0 interrupt service routine
+#if defined(__TI_COMPILER_VERSION__) || defined(__IAR_SYSTEMS_ICC__)
+#pragma vector = TIMER0_A0_VECTOR
+__interrupt void Timer0_A0_ISR (void)
+#elif defined(__GNUC__)
+void __attribute__ ((interrupt(TIMER0_A0_VECTOR))) Timer0_A0_ISR (void)
+#else
+#error Compiler not supported!
+#endif
+{
+  ++counter;
+  if(counter == 1459){
+  P1OUT ^= BIT0;
+  counter = 0;
+  ++count;
+  printf("%d minute(s) passed \n", count);
+  }
+  TA0CCR0 += 500000;                         // Add Offset to TA0CCR0
+}
+
 
 void initiate(void){
 
@@ -245,6 +274,11 @@ void initiate(void){
     P1OUT &= ~BIT5;
     P3OUT &= ~BIT4;
     P4OUT &= ~BIT3;
+
+     TA0CCTL0 = CCIE;                          // TACCR0 interrupt enabled
+     TA0CCR0 = 500000;
+     TA0CTL = TASSEL__SMCLK | MC__CONTINOUS;   // SMCLK, continuous mode
+
     //P2SEL0 |= BIT4;                             // Enable A/D channel inputs (P2.4 channel A7) (Not needed)
    // P2SEL1 |= BIT4;
   /*  P4SEL0 |= BIT2;                             // Enable A/D channel inputs (P4.2 channel A10) (Not needed)
@@ -254,9 +288,9 @@ void initiate(void){
     while(REFCTL0 & REFGENBUSY);
     REFCTL0 |= REFVSEL_1 + REFON;
     ADC12CTL0 &= ~ADC12ENC;
-
-    P2SEL1 |= BIT5 | BIT6;                    // USCI_A1 UART operation
     P2SEL0 &= ~(BIT5 | BIT6);
+    P2SEL1 |= BIT5 | BIT6;                    // USCI_A1 UART operation
+
     PM5CTL0 &= ~LOCKLPM5;
 
       ADC12CTL0 |= ADC12MSC + ADC12SHT0_2 + ADC12SHT1_2; // Turn on ADC12, one SHI trigger is needed, extend sampling time (256 ADC12CLK cycles) // to avoid overflow of results
@@ -266,18 +300,72 @@ void initiate(void){
       ADC12MCTL1 |= /*ADC12VRSEL_1 + */ ADC12INCH_10 + ADC12EOS;            // ref+=AVcc, channel = A10
       Charge_Bat_Num = 0;
       Discharge_Bat_Num = 0;
-      //ADC12IER0 = 0x0480;                         // Enable ADC12IFG.7 & ADC12IFG.10
+      //ADC12IER0 = 0x0480;
      //Configure USCI_A1 for UART mode
-      UCA1CTLW0 = UCSWRST;                      // Put eUSCI in reset
-      UCA1CTL1 |= UCSSEL__SMCLK;                // CLK = SMCLK
-      UCA1BR0 = 8;                              // 1000000/115200 = 8.68
-      UCA1MCTLW = 0xD600;                       // 1000000/115200 - INT(1000000/115200)=0.68
-      UCA1BR1 = 0;
-      UCA1CTL1 &= ~UCSWRST;                         // release from reset
+      UCA1CTL1 = UCSWRST;
+     //Set BRCLK = SMCLK
+     UCA1CTL1 |= UCSSEL_2;
+     //Values found using table for 1Mhz and 9600 baudrate
+     UCA1BR0=6;
+     UCA1BR1=0;
+     UCA1MCTLW = 0x20 << 8;
+     UCA1MCTLW |= 8 << 4;
+     UCA1MCTLW |= UCOS16;
+     //UCA0 out of reset
+     UCA1CTL1 &= ~UCSWRST;
       while(!(REFCTL0 & REFGENRDY));            // Wait for reference generator to settle
       ADC12CTL2 |= ADC12RES_2;                   //  12 bit resolution        // ADC12RES_x defines the conversion result resolution.
       ADC12CTL0 |= ADC12ON;                       // Enable ADC12_B. This can only be modified if ADC12ENC = 0.
-     __bis_SR_register(GIE);       // Enter LPM0, Enable interrupts
+      __bis_SR_register(GIE);// + LPM0_bits);       // Enter LPM0, Enable interrupts
   //  __no_operation();                         // For debugger
 
 }
+
+
+void uartSend(unsigned char *pucData, unsigned char ucLength)
+{
+  while(ucLength>0)
+  {
+    // Wait for TX buffer to be ready for new data
+    while(!(UCA1IFG & UCTXIFG));
+    // Push data to TX buffer
+    UCA1TXBUF = *pucData;
+    // Update variables
+    ucLength--;
+    pucData++;
+  }
+}
+/*
+void circuit_logic(void){
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
