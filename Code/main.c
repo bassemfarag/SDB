@@ -6,22 +6,20 @@
 #include <stdlib.h>
 #include <string.h>
 
-//#define   Num_of_Results   8
+#define   Num_of_Results   50
 uint8_t Charge_Bat_Num = 0;
 uint8_t Discharge_Bat_Num = 0;
 uint16_t ADC_ResultA7 = 0;
 uint16_t ADC_ResultA10 = 0;
-//volatile unsigned char TXData[10]={0};
-//volatile uint16_t TXData;
-//volatile unsigned short indexT = 0;
-//volatile unsigned short indexR = 0;
-unsigned char outbuffer[50];
+volatile uint8_t i;
+volatile uint8_t p=0;
+unsigned char outbuffer[Num_of_Results];
+unsigned char test [] = "I love you";
 volatile int counter  = 0;
 volatile int count = 0;
 void initiate (void);
 void circuit_logic(void);
 void uartSend(unsigned char *pucData, unsigned char ucLength);
-//unsigned char sendString[] = "I am working ";
 uint8_t length=0;
 void main(void)
 {
@@ -33,25 +31,8 @@ void main(void)
     CSCTL3 = DIVA__1 | DIVS__1 | DIVM__1;
     CSCTL0_H = 0;
     initiate();
-  //  unsigned char sendString[] = "I am working ";
-    //unsigned char length=13;
 
- // P1OUT |= 0x01;
   while(1){
-
-    /*  ADC12CTL0 |= ADC12ENC | ADC12SC;                    // Enable and start conversions
-      while (ADC12CTL1 & ADC12BUSY);
-      ADC_ResultA7 = ADC12MEM0;
-      ADC_ResultA10 = ADC12MEM1;
-      printf("A7 = %d\n",ADC_ResultA7);
-      printf("A10 = %d\n",ADC_ResultA10);*/
-      //  P1OUT ^= 0x01;
-      //__delay_cycles(100000);
-     //    while(!(UCA1IFG & UCTXIFG));
-       //  sprintf(outbuffer, "%d \n \n \n \n \n ",TXData);
-     //  uartSend(sendString,length);                   // Load data onto buffer
-     //  __delay_cycles(5000);
-
   }
 }
 
@@ -92,16 +73,14 @@ __interrupt void Port_1(void)
                 P1OUT |= BIT4;
                 printf("Charging Battery number %d \n", Charge_Bat_Num);
             }
-
                  printf("A7 = %d mV \n",ADC_ResultA7*3610/4095);
                  printf("A10 = %d mV\n",ADC_ResultA10*3610/4095);
-
-                 sprintf(outbuffer, "Charging battery number %d \r\n",Charge_Bat_Num);
+                 sprintf(outbuffer, "\r\nCharging battery number %d",Charge_Bat_Num);
                  length= sizeof(outbuffer);
                  uartSend(outbuffer,length);                   // Load data onto buffer
-                 sprintf(outbuffer, "Voltage = %d mV \r\n",ADC_ResultA7*3610/4095);
+                 sprintf(outbuffer, "\r\nVoltage = %d mV",ADC_ResultA7*3610/4095);
                  length= sizeof(outbuffer);
-                 uartSend(outbuffer,18);
+                 uartSend(outbuffer,17);
                  Charge_Bat_Num++;
                  if(Charge_Bat_Num>3)
                      Charge_Bat_Num = 0;
@@ -187,6 +166,33 @@ __interrupt void Port_4(void)
         break;
     }
 }
+
+
+
+#if defined(__TI_COMPILER_VERSION__) || defined(__IAR_SYSTEMS_ICC__)
+#pragma vector=USCI_A1_VECTOR
+__interrupt void USCI_A1_ISR(void)
+#elif defined(__GNUC__)
+void __attribute__ ((interrupt(USCI_A0_VECTOR))) USCI_A0_ISR (void)
+#else
+#error Compiler not supported!
+#endif
+{
+  switch(__even_in_range(UCA1IV,USCI_UART_UCTXCPTIFG))
+  {
+    case USCI_NONE: break;
+    case USCI_UART_UCRXIFG:
+        if (UCA1RXBUF == 'a') // 'u' received?
+        {
+            uartSend(outbuffer,17);                   // Load data onto buffer
+         //  printf("RX ISR\n");
+        }
+      break;
+    case USCI_UART_UCTXIFG:break;
+    case USCI_UART_UCSTTIFG: break;
+    case USCI_UART_UCTXCPTIFG: break;
+  }
+}
 // Timer0_A0 interrupt service routine
 #if defined(__TI_COMPILER_VERSION__) || defined(__IAR_SYSTEMS_ICC__)
 #pragma vector = TIMER0_A0_VECTOR
@@ -269,6 +275,8 @@ void initiate(void){
      UCA1MCTLW |= UCOS16;
      //UCA0 out of reset
      UCA1CTL1 &= ~UCSWRST;
+     UCA1IE |= UCRXIE;
+     UCA1IE &= ~UCTXIE; // Disable USCI_A0 TX interrupt
       while(!(REFCTL0 & REFGENRDY));            // Wait for reference generator to settle
       ADC12CTL2 |= ADC12RES_2;                   //  12 bit resolution        // ADC12RES_x defines the conversion result resolution.
       ADC12CTL0 |= ADC12ON;                       // Enable ADC12_B. This can only be modified if ADC12ENC = 0.
@@ -280,6 +288,7 @@ void initiate(void){
 
 void uartSend(unsigned char *pucData, uint8_t ucLength)
 {
+  //UCA1IE &= ~UCTXIE; // Disable USCI_A0 TX interrupt
   while(ucLength>0)
   {
     // Wait for TX buffer to be ready for new data
@@ -287,10 +296,15 @@ void uartSend(unsigned char *pucData, uint8_t ucLength)
     // Push data to TX buffer
     UCA1TXBUF = *pucData;
     // Update variables
+    // printf("time number %d \n", p);
+     //p++;
     ucLength--;
     pucData++;
   }
+ // p=0;
 }
+
+
 /*
 void circuit_logic(void){
 
