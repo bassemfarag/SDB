@@ -7,22 +7,22 @@
 #include <string.h>
 
 //#define   Num_of_Results   8
-volatile uint8_t Charge_Bat_Num;
-volatile uint8_t Discharge_Bat_Num;
-unsigned long ADC_ResultA7 = 0;
-unsigned long ADC_ResultA10 = 0;
+uint8_t Charge_Bat_Num = 0;
+uint8_t Discharge_Bat_Num = 0;
+uint16_t ADC_ResultA7 = 0;
+uint16_t ADC_ResultA10 = 0;
 //volatile unsigned char TXData[10]={0};
-volatile uint16_t TXData;
-volatile unsigned short indexT = 0;
-volatile unsigned short indexR = 0;
-volatile unsigned char outbuffer[10] = "HELLO EERR";
+//volatile uint16_t TXData;
+//volatile unsigned short indexT = 0;
+//volatile unsigned short indexR = 0;
+unsigned char outbuffer[50];
 volatile int counter  = 0;
 volatile int count = 0;
 void initiate (void);
 void circuit_logic(void);
 void uartSend(unsigned char *pucData, unsigned char ucLength);
-unsigned char sendString[] = "I am working ";
-unsigned char length=13;
+//unsigned char sendString[] = "I am working ";
+uint8_t length=0;
 void main(void)
 {
     WDTCTL = WDTPW+WDTHOLD;                   // Stop watchdog timer
@@ -35,6 +35,7 @@ void main(void)
     initiate();
   //  unsigned char sendString[] = "I am working ";
     //unsigned char length=13;
+
  // P1OUT |= 0x01;
   while(1){
 
@@ -48,62 +49,12 @@ void main(void)
       //__delay_cycles(100000);
      //    while(!(UCA1IFG & UCTXIFG));
        //  sprintf(outbuffer, "%d \n \n \n \n \n ",TXData);
-       uartSend(sendString,length);                   // Load data onto buffer
+     //  uartSend(sendString,length);                   // Load data onto buffer
      //  __delay_cycles(5000);
 
   }
-  return 0;
 }
-  /*
-#pragma vector=ADC12_VECTOR
-__interrupt void ADC12ISR (void)
-{
-  static unsigned int index = 0;
 
-  switch(__even_in_range(ADC12IV,34))
-  {
-  case  0: break;                           // Vector  0:  No interrupt
-  case  2: break;                           // Vector  2:  ADC overflow
-  case  4: break;                           // Vector  4:  ADC timing overflow
-  case  6: break;                           // Vector  6:  ADC12IFG0
-  case  8: break;                           // Vector  8:  ADC12IFG1
-  case 10: break;                           // Vector 10:  ADC12IFG2
-  case 12: break;                               // Vector 12:  ADC12IFG3
-  case 14: break;                           // Vector 14:  ADC12IFG4
-  case 16: break;                           // Vector 16:  ADC12IFG5
-  case 18: break;                           // Vector 18:  ADC12IFG6
-  case 20:                                 // Vector 20:  ADC12IFG7
-      ADC = ADC12MEM7;           // Move A7 results, IFG is cleared
-      index++;                                // Increment results index, modulo; Set Breakpoint1 here
-      __delay_cycles(5000);
-      P1OUT ^= BIT0;
-      if (index == 7)
-      {
-        (index = 0);
-      }
-      __bis_SR_register_on_exit(LPM0_bits);
-      break;
-  case 22: break;                           // Vector 22:  ADC12IFG8
-  case 24: break;                           // Vector 24:  ADC12IFG9
-  case 26:                            // Vector 26:  ADC12IFG10
-      A1results[index] = ADC12MEM10;           // Move A10 results, IFG is cleared
-      index++;                                // Increment results index, modulo; Set Breakpoint1 here
-      __delay_cycles(5000);
-          P1OUT ^= BIT0;
-      if (index == 7)
-      {
-        (index = 0);
-      }
-      __bis_SR_register_on_exit(LPM0_bits);
-      break;
-  case 28: break;                           // Vector 28:  ADC12IFG11
-  case 30: break;                           // Vector 30:  ADC12IFG12
-  case 32: break;                           // Vector 32:  ADC12IFG13
-  case 34: break;                           // Vector 34:  ADC12IFG14
-  default: break;
-  }
-}
-*/
 
 
 #pragma vector=PORT1_VECTOR
@@ -125,30 +76,35 @@ __interrupt void Port_1(void)
                 P1OUT &= ~BIT4;
                 P1OUT &= ~BIT5;
                 printf("Charging Battery number %d \n", Charge_Bat_Num);
-                Charge_Bat_Num = 1;
             }
             else if(Charge_Bat_Num == 1){
                 P1OUT |= BIT4;
                 P1OUT &= ~BIT5;
                 printf("Charging Battery number %d \n", Charge_Bat_Num);
-                Charge_Bat_Num = 2;
             }
             else if(Charge_Bat_Num == 2){
                 P1OUT |= BIT5;
                 P1OUT &= ~BIT4;
                 printf("Charging Battery number %d \n", Charge_Bat_Num);
-                Charge_Bat_Num = 3;
             }
             else if(Charge_Bat_Num == 3){
                 P1OUT |= BIT5;
                 P1OUT |= BIT4;
                 printf("Charging Battery number %d \n", Charge_Bat_Num);
-                Charge_Bat_Num = 0;
             }
 
                  printf("A7 = %d mV \n",ADC_ResultA7*3610/4095);
                  printf("A10 = %d mV\n",ADC_ResultA10*3610/4095);
 
+                 sprintf(outbuffer, "Charging battery number %d \r\n",Charge_Bat_Num);
+                 length= sizeof(outbuffer);
+                 uartSend(outbuffer,length);                   // Load data onto buffer
+                 sprintf(outbuffer, "Voltage = %d mV \r\n",ADC_ResultA7*3610/4095);
+                 length= sizeof(outbuffer);
+                 uartSend(outbuffer,18);
+                 Charge_Bat_Num++;
+                 if(Charge_Bat_Num>3)
+                     Charge_Bat_Num = 0;
 
             /*if(UCA1IFG & UCTXIFG){
            //sprintf(outbuffer, "A7 is %d \n \n \n \n ",ADC_ResultA7);
@@ -322,7 +278,7 @@ void initiate(void){
 }
 
 
-void uartSend(unsigned char *pucData, unsigned char ucLength)
+void uartSend(unsigned char *pucData, uint8_t ucLength)
 {
   while(ucLength>0)
   {
@@ -338,29 +294,59 @@ void uartSend(unsigned char *pucData, unsigned char ucLength)
 /*
 void circuit_logic(void){
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
-
 */
 
+/*
+#pragma vector=ADC12_VECTOR
+__interrupt void ADC12ISR (void)
+{
+ static unsigned int index = 0;
 
-
-
+ switch(__even_in_range(ADC12IV,34))
+ {
+ case  0: break;                           // Vector  0:  No interrupt
+ case  2: break;                           // Vector  2:  ADC overflow
+ case  4: break;                           // Vector  4:  ADC timing overflow
+ case  6: break;                           // Vector  6:  ADC12IFG0
+ case  8: break;                           // Vector  8:  ADC12IFG1
+ case 10: break;                           // Vector 10:  ADC12IFG2
+ case 12: break;                               // Vector 12:  ADC12IFG3
+ case 14: break;                           // Vector 14:  ADC12IFG4
+ case 16: break;                           // Vector 16:  ADC12IFG5
+ case 18: break;                           // Vector 18:  ADC12IFG6
+ case 20:                                 // Vector 20:  ADC12IFG7
+     ADC = ADC12MEM7;           // Move A7 results, IFG is cleared
+     index++;                                // Increment results index, modulo; Set Breakpoint1 here
+     __delay_cycles(5000);
+     P1OUT ^= BIT0;
+     if (index == 7)
+     {
+       (index = 0);
+     }
+     __bis_SR_register_on_exit(LPM0_bits);
+     break;
+ case 22: break;                           // Vector 22:  ADC12IFG8
+ case 24: break;                           // Vector 24:  ADC12IFG9
+ case 26:                            // Vector 26:  ADC12IFG10
+     A1results[index] = ADC12MEM10;           // Move A10 results, IFG is cleared
+     index++;                                // Increment results index, modulo; Set Breakpoint1 here
+     __delay_cycles(5000);
+         P1OUT ^= BIT0;
+     if (index == 7)
+     {
+       (index = 0);
+     }
+     __bis_SR_register_on_exit(LPM0_bits);
+     break;
+ case 28: break;                           // Vector 28:  ADC12IFG11
+ case 30: break;                           // Vector 30:  ADC12IFG12
+ case 32: break;                           // Vector 32:  ADC12IFG13
+ case 34: break;                           // Vector 34:  ADC12IFG14
+ default: break;
+ }
+}
+*/
 
 
 
