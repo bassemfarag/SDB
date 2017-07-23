@@ -18,7 +18,8 @@
 
 extern void Init_Clock(void);
 extern void Init_Gpio(void);
-extern void Init_Timer(void);
+extern void Init_Timer0(void);
+extern void Init_Timer1(void);
 extern void Init_ADC(void);
 extern void Init_UART(void);
 extern void circuit_logic(void);

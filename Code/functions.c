@@ -2,7 +2,7 @@
 
 
  void Init_Clock(void){
-        CSCTL0_H = CSKEY >> 8;
+           CSCTL0_H = CSKEY >> 8;
            CSCTL1 = DCOFSEL_0;// | DCORSEL;
            CSCTL2 = SELA__VLOCLK | SELS__DCOCLK | SELM__DCOCLK;
            CSCTL3 = DIVA__1 | DIVS__1 | DIVM__1;
@@ -24,25 +24,34 @@
     P4OUT |= BIT5;                               // Set as pull up.
     P4IES |= BIT5;                               // interrupt high to low
     P4IE |= BIT5;                                // P1.3 interrupt enabled
-    P4IFG &= ~BIT5;                            // P1.3 interrupt flag cleared
+    P4IFG &= ~BIT5;                            // P4.5 interrupt flag cleared
     P1OUT &= ~BIT4;
     P1OUT &= ~BIT5;
     P3OUT &= ~BIT4;
     P4OUT &= ~BIT3;
+    P2SEL0 &= ~(BIT5 | BIT6);
+    P2SEL1 |= BIT5 | BIT6;                    // USCI_A1 UART operation
+    PM5CTL0 &= ~LOCKLPM5;
 }
- void Init_Timer(void){
+ void Init_Timer0(void){
         TA0CCTL0 = CCIE;                          // TACCR0 interrupt enabled
-        TA0CCR0 = 500000;
+     //   TA0CCR0 = 500000;
         TA0CTL = TASSEL__SMCLK | MC__CONTINOUS;   // SMCLK, continuous mode
 }
+
+ void Init_Timer1(void){
+        TA0CCTL1 = CCIE;                          // TACCR0 interrupt enabled
+        TA0CCR0 = 5000;
+        TA0CTL = TASSEL__SMCLK | MC__UP;   // SMCLK, continuous mode
+}
+
+
+
 
  void Init_ADC(void){
     while(REFCTL0 & REFGENBUSY);
     REFCTL0 |= REFVSEL_1 + REFON;
     ADC12CTL0 &= ~ADC12ENC;
-    P2SEL0 &= ~(BIT5 | BIT6);
-    P2SEL1 |= BIT5 | BIT6;                    // USCI_A1 UART operation
-    PM5CTL0 &= ~LOCKLPM5;
     ADC12CTL0 |= ADC12MSC + ADC12SHT0_2 + ADC12SHT1_2; // Turn on ADC12, one SHI trigger is needed, extend sampling time (256 ADC12CLK cycles) // to avoid overflow of results
     ADC12CTL1 |= ADC12SSEL_3;                   // clk source: SMCLK
     ADC12CTL1 |= ADC12SHP +ADC12CONSEQ_1;       // Use sampling timer, repeated sequence
