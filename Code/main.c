@@ -82,7 +82,6 @@ __interrupt void Port_1(void)
                      if(Charge_Bat_Num>3)
                          Charge_Bat_Num = 0;
                      P1IFG &= ~BIT1;           // P1.1 interrupt flag cleared
-                     Button1_Pressed=0;
                 break;
         case P1IV_P1IFG2:                          /* P1.2 */
         break;
@@ -97,8 +96,8 @@ __interrupt void Port_1(void)
         case P1IV_P1IFG7:                       /* P1.7 */
         break;
         default:break;
-        Button1_Pressed = 0;
         }
+        Button1_Pressed = 0;
     }
 }
 
