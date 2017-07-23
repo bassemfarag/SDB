@@ -3,12 +3,14 @@
 #include <functions.h>
 
 #define Num_of_Results   50
-uint8_t Charge_Bat_Num = 0;
-uint8_t Discharge_Bat_Num = 0;
-uint16_t ADC_ResultA7 = 0;
-uint16_t ADC_ResultA10 = 0;
+volatile uint8_t Charge_Bat_Num = 0;
+volatile uint8_t Discharge_Bat_Num = 0;
+volatile uint16_t ADC_ResultA7 = 0;
+volatile uint16_t ADC_ResultA10 = 0;
 volatile uint8_t i;
 volatile uint8_t p=0;
+volatile bool Button1_Pressed = 0;
+volatile bool Button4_Pressed = 0;
 unsigned char outbuffer[Num_of_Results];
 volatile int counter  = 0;
 volatile int count = 0;
@@ -17,7 +19,7 @@ uint8_t length=0;
 void main(void)
 {
     WDTCTL = WDTPW+WDTHOLD;                   // Stop watchdog timer
-    //PM5CTL0 &= ~LOCKLPM5;
+    PM5CTL0 &= ~LOCKLPM5;
     Init_Clock();
     Init_Gpio();
     Init_Timer();
@@ -33,120 +35,139 @@ void main(void)
 #pragma vector=PORT1_VECTOR
 __interrupt void Port_1(void)
 {
-    switch (__even_in_range(P1IV,P1IV_P1IFG7))
-    {
-    case P1IV_NONE:                                 /*NONE  */
-    break;
-    case P1IV_P1IFG0:                              /* P1.0 */
-    break;
-    case P1IV_P1IFG1:                             /* P1.1 */
-            ADC12CTL0 |= ADC12ENC | ADC12SC;                    // Enable and start conversions
-            while (ADC12CTL1 & ADC12BUSY);
-            ADC_ResultA7 = ADC12MEM0;
-            ADC_ResultA10 = ADC12MEM1;
-            P1OUT ^= BIT0;/* + BIT3 + BIT4 + BIT5; */             // Toggle P1.0
-            if(Charge_Bat_Num == 0){
-                P1OUT &= ~BIT4;
-                P1OUT &= ~BIT5;
-                printf("Charging Battery number %d \n", Charge_Bat_Num);
-            }
-            else if(Charge_Bat_Num == 1){
-                P1OUT |= BIT4;
-                P1OUT &= ~BIT5;
-                printf("Charging Battery number %d \n", Charge_Bat_Num);
-            }
-            else if(Charge_Bat_Num == 2){
-                P1OUT |= BIT5;
-                P1OUT &= ~BIT4;
-                printf("Charging Battery number %d \n", Charge_Bat_Num);
-            }
-            else if(Charge_Bat_Num == 3){
-                P1OUT |= BIT5;
-                P1OUT |= BIT4;
-                printf("Charging Battery number %d \n", Charge_Bat_Num);
-            }
-                 printf("First Battery Voltage = %d mV \n",ADC_ResultA7*3610/4095);
-                 printf("Second Battery Voltage = %d mV\n",ADC_ResultA10*3610/4095);
-                 sprintf(outbuffer, "\r\nCharging battery number %d",Charge_Bat_Num);
-                 length= sizeof(outbuffer);
-                 uartSend(outbuffer,length);                   // Load data onto buffer
-                 sprintf(outbuffer, "\r\nVoltage = %d mV",ADC_ResultA7*3610/4095);
-                 length= sizeof(outbuffer);
-                 uartSend(outbuffer,15);
-                 Charge_Bat_Num++;
-                 if(Charge_Bat_Num>3)
-                     Charge_Bat_Num = 0;
-                 P1IFG &= ~BIT1;           // P1.1 interrupt flag cleared
-            break;
-    case P1IV_P1IFG2:                          /* P1.2 */
-    break;
-    case P1IV_P1IFG3:                          /* P1.3 */
-    break;
-    case P1IV_P1IFG4:                          /* P1.4 */
-    break;
-    case P1IV_P1IFG5:                         /* P1.5 */
-    break;
-    case P1IV_P1IFG6:                        /* P1.6 */
-    break;
-    case P1IV_P1IFG7:                       /* P1.7 */
-    break;
-    default:
+    if(!Button1_Pressed){
+        Button1_Pressed = 1;
+        __delay_cycles(100000);
+        switch (__even_in_range(P1IV,P1IV_P1IFG7))
+        {
+        case P1IV_NONE:                                 /*NONE  */
         break;
-    }}
+        case P1IV_P1IFG0:                              /* P1.0 */
+        break;
+        case P1IV_P1IFG1:                             /* P1.1 */
+                ADC12CTL0 |= ADC12ENC | ADC12SC;                    // Enable and start conversions
+                while (ADC12CTL1 & ADC12BUSY);
+                ADC_ResultA7 = ADC12MEM0;
+                ADC_ResultA10 = ADC12MEM1;
+                P1OUT ^= BIT0;/* + BIT3 + BIT4 + BIT5; */             // Toggle P1.0
+                if(Charge_Bat_Num == 0){
+                    P1OUT &= ~BIT4;
+                    P1OUT &= ~BIT5;
+                    printf("Charging Battery number %d \n", Charge_Bat_Num);
+                }
+                else if(Charge_Bat_Num == 1){
+                    P1OUT |= BIT4;
+                    P1OUT &= ~BIT5;
+                    printf("Charging Battery number %d \n", Charge_Bat_Num);
+                }
+                else if(Charge_Bat_Num == 2){
+                    P1OUT |= BIT5;
+                    P1OUT &= ~BIT4;
+                    printf("Charging Battery number %d \n", Charge_Bat_Num);
+                }
+                else if(Charge_Bat_Num == 3){
+                    P1OUT |= BIT5;
+                    P1OUT |= BIT4;
+                    printf("Charging Battery number %d \n", Charge_Bat_Num);
+                }
+                     printf("First Battery Voltage = %d mV \n",ADC_ResultA7*3610/4095);
+                     printf("Second Battery Voltage = %d mV\n",ADC_ResultA10*3610/4095);
+                     sprintf(outbuffer, "\r\nCharging battery number %d",Charge_Bat_Num);
+                     length= sizeof(outbuffer);
+                     uartSend(outbuffer,length);                   // Load data onto buffer
+                     sprintf(outbuffer, "\r\nVoltage = %d mV",ADC_ResultA7*3610/4095);
+                     length= sizeof(outbuffer);
+                     uartSend(outbuffer,17);
+                     Charge_Bat_Num++;
+                     if(Charge_Bat_Num>3)
+                         Charge_Bat_Num = 0;
+                     P1IFG &= ~BIT1;           // P1.1 interrupt flag cleared
+                     Button1_Pressed=0;
+                break;
+        case P1IV_P1IFG2:                          /* P1.2 */
+        break;
+        case P1IV_P1IFG3:                          /* P1.3 */
+        break;
+        case P1IV_P1IFG4:                          /* P1.4 */
+        break;
+        case P1IV_P1IFG5:                         /* P1.5 */
+        break;
+        case P1IV_P1IFG6:                        /* P1.6 */
+        break;
+        case P1IV_P1IFG7:                       /* P1.7 */
+        break;
+        default:break;
+        Button1_Pressed = 0;
+        }
+    }
+}
 
             /********************************************************************************************/
 
 #pragma vector=PORT4_VECTOR
 __interrupt void Port_4(void)
 {
-    switch (__even_in_range(P4IV,P4IV_P4IFG7))
-    {
-    case P4IV_NONE:                                 /*NONE  */
-    break;
-    case P4IV_P4IFG0:                              /* P4.0 */
-    break;
-    case P4IV_P4IFG1:                             /* P4.1 */
-    break;
-    case P4IV_P4IFG2:                          /* P4.2 */
-    break;
-    case P4IV_P4IFG3:                          /* P4.3 */
-    break;
-    case P4IV_P4IFG4:                          /* P4.4 */
-    break;
-    case P4IV_P4IFG5:                         /* P4.5 */
-        P4OUT ^= BIT6;/* + BIT3 + BIT4 + BIT5; */             // Toggle P4.6
-        if(Discharge_Bat_Num == 0){
-            P3OUT &= ~BIT4;
-            P4OUT &= ~BIT3;
-            printf("Discharging Battery number %d \n", Discharge_Bat_Num);
-            Discharge_Bat_Num = 1;
-        }
-        else if(Discharge_Bat_Num == 1){
-            P3OUT |= BIT4;
-            P4OUT &= ~BIT3;
-            printf("Discharging Battery number %d \n", Discharge_Bat_Num);
-            Discharge_Bat_Num = 2;
-        }
-        else if(Discharge_Bat_Num == 2){
-            P4OUT |= BIT3;
-            P3OUT &= ~BIT4;
-            printf("Discharging Battery number %d \n", Discharge_Bat_Num);
-            Discharge_Bat_Num = 3;
-        }
-        else if(Discharge_Bat_Num == 3){
-            P3OUT |= BIT4;
-            P4OUT |= BIT3;
-            printf("Discharging Battery number %d \n", Discharge_Bat_Num);
-            Discharge_Bat_Num = 0;
-        }
-        P4IFG &= ~BIT5;           // P1.1 interrupt flag cleared
-    break;
-    case P4IV_P4IFG6:                        /* P1.6 */
-    break;
-    case P4IV_P4IFG7:                       /* P1.7 */
-    break;
-    default:
+    if(!Button4_Pressed){
+        Button4_Pressed = 1;
+        __delay_cycles(100000);
+        switch (__even_in_range(P4IV,P4IV_P4IFG7))
+        {
+        case P4IV_NONE:                                 /*NONE  */
         break;
+        case P4IV_P4IFG0:                              /* P4.0 */
+        break;
+        case P4IV_P4IFG1:                             /* P4.1 */
+        break;
+        case P4IV_P4IFG2:                          /* P4.2 */
+        break;
+        case P4IV_P4IFG3:                          /* P4.3 */
+        break;
+        case P4IV_P4IFG4:                          /* P4.4 */
+        break;
+        case P4IV_P4IFG5:                         /* P4.5 */
+            P4OUT ^= BIT6;/* + BIT3 + BIT4 + BIT5; */             // Toggle P4.6
+            if(Discharge_Bat_Num == 0){
+                P3OUT &= ~BIT4;
+                P4OUT &= ~BIT3;
+                printf("Discharging Battery number %d \n", Discharge_Bat_Num);
+                Discharge_Bat_Num = 1;
+            }
+            else if(Discharge_Bat_Num == 1){
+                P3OUT |= BIT4;
+                P4OUT &= ~BIT3;
+                printf("Discharging Battery number %d \n", Discharge_Bat_Num);
+                Discharge_Bat_Num = 2;
+            }
+            else if(Discharge_Bat_Num == 2){
+                P4OUT |= BIT3;
+                P3OUT &= ~BIT4;
+                printf("Discharging Battery number %d \n", Discharge_Bat_Num);
+                Discharge_Bat_Num = 3;
+            }
+            else if(Discharge_Bat_Num == 3){
+                P3OUT |= BIT4;
+                P4OUT |= BIT3;
+                printf("Discharging Battery number %d \n", Discharge_Bat_Num);
+                Discharge_Bat_Num = 0;
+            }
+             sprintf(outbuffer, "\r\nDischarging battery number %d",Discharge_Bat_Num);
+             length= sizeof(outbuffer);
+             uartSend(outbuffer,length);                   // Load data onto buffer
+             sprintf(outbuffer, "\r\nVoltage = %d mV",ADC_ResultA7*3610/4095);
+             length= sizeof(outbuffer);
+             uartSend(outbuffer,17);
+             Charge_Bat_Num++;
+             if(Charge_Bat_Num>3)
+                 Charge_Bat_Num = 0;
+             P4IFG &= ~BIT5;           // P1.1 interrupt flag cleared
+        break;
+        case P4IV_P4IFG6:                        /* P1.6 */
+        break;
+        case P4IV_P4IFG7:                       /* P1.7 */
+        break;
+        default:break;
+        }
+        Button4_Pressed = 0;
     }
 }
 
