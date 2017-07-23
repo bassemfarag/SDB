@@ -22,15 +22,14 @@ void main(void)
     PM5CTL0 &= ~LOCKLPM5;
     Init_Clock();
     Init_Gpio();
-    Init_Timer();
+    Init_Timer0();
+    Init_Timer1();
     Init_ADC();
     Init_UART();
   while(1){
 
   }
 }
-
-
 
 #pragma vector=PORT1_VECTOR
 __interrupt void Port_1(void)
@@ -214,9 +213,28 @@ void __attribute__ ((interrupt(TIMER0_A0_VECTOR))) Timer0_A0_ISR (void)
   ++count;
   printf("%d minute(s) passed \n", count);
   }
-  TA0CCR0 += 500000;                         // Add Offset to TA0CCR0
+ // TA0CCR0 += 500000;                         // Add Offset to TA0CCR0
 }
 
+
+#if defined(__TI_COMPILER_VERSION__) || defined(__IAR_SYSTEMS_ICC__)
+#pragma vector = TIMER0_A1_VECTOR
+__interrupt void Timer0_A1_ISR (void)
+#elif defined(__GNUC__)
+void __attribute__ ((interrupt(TIMER0_A1_VECTOR))) Timer0_A1_ISR (void)
+#else
+#error Compiler not supported!
+#endif
+{
+  ++counter;
+  if(counter == 5000){
+  P4OUT ^= BIT6;
+  counter = 0;
+  ++count;
+ // printf("%d minute(s) passed \n", count);
+  }
+ // TA0CCR0 += 500000;                         // Add Offset to TA0CCR0
+}
 
 
 
