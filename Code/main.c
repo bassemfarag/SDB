@@ -5,17 +5,22 @@
 #define Num_of_Results   50
 volatile uint8_t Charge_Bat_Num = 0;
 volatile uint8_t Discharge_Bat_Num = 0;
-volatile uint16_t ADC_ResultA7 = 0;
-volatile uint16_t ADC_ResultA10 = 0;
-volatile uint8_t i;
-volatile uint8_t p=0;
+volatile unsigned long ADC_ResultA7 = 0;   /* ADC_ResultA7, ADC_ResultA10 must be long to avoid overflow when converting into mV*/
+volatile unsigned long ADC_ResultA10 = 0;
+//volatile uint8_t i;
+//volatile uint8_t p=0;
 volatile bool Button1_Pressed = 0;
 volatile bool Button4_Pressed = 0;
-unsigned char outbuffer[Num_of_Results];
+unsigned char outbuffer[Num_of_Results]={0};
 volatile int counter  = 0;
+volatile int counter1 = 0;
 volatile int count = 0;
+volatile int count1 = 0;
+uint8_t logic=0;
 uint8_t length=0;
 
+Battery* Vl2020;
+Battery* Capacitor;
 void main(void)
 {
     WDTCTL = WDTPW+WDTHOLD;                   // Stop watchdog timer
@@ -26,6 +31,7 @@ void main(void)
     Init_Timer1();
     Init_ADC();
     Init_UART();
+    Init_Battery(Vl2020,Not_Connected ,Position_One);
   while(1){
 
   }
@@ -69,9 +75,8 @@ __interrupt void Port_1(void)
                     P1OUT |= BIT4;
                     printf("Charging Battery number %d \n", Charge_Bat_Num);
                 }
-                     printf("First Battery Voltage = %d mV \n",ADC_ResultA7*3610/4095);
-                     printf("Second Battery Voltage = %d mV\n",ADC_ResultA10*3610/4095);
-                     sprintf(outbuffer, "\r\nCharging battery number %d",Charge_Bat_Num);
+                     printf("First Battery Voltage = %d mV \n",ADC_ResultA7*2375/4095);
+                     printf("Second Battery Voltage = %d mV\n",ADC_ResultA10*2375/4095);              sprintf(outbuffer, "\r\nCharging battery number %d",Charge_Bat_Num);
                      length= sizeof(outbuffer);
                      uartSend(outbuffer,length);                   // Load data onto buffer
                      sprintf(outbuffer, "\r\nVoltage = %d mV",ADC_ResultA7*3610/4095);
@@ -151,7 +156,7 @@ __interrupt void Port_4(void)
              sprintf(outbuffer, "\r\nDischarging battery number %d",Discharge_Bat_Num);
              length= sizeof(outbuffer);
              uartSend(outbuffer,length);                   // Load data onto buffer
-             sprintf(outbuffer, "\r\nVoltage = %d mV",ADC_ResultA7*3610/4095);
+             sprintf(outbuffer, "\r\nVoltage = %d mV",ADC_ResultA7*2750/4095);
              length= sizeof(outbuffer);
              uartSend(outbuffer,17);
              Charge_Bat_Num++;
@@ -197,6 +202,7 @@ void __attribute__ ((interrupt(USCI_A0_VECTOR))) USCI_A0_ISR (void)
 }
 
 // Timer0_A0 interrupt service routine
+
 #if defined(__TI_COMPILER_VERSION__) || defined(__IAR_SYSTEMS_ICC__)
 #pragma vector = TIMER0_A0_VECTOR
 __interrupt void Timer0_A0_ISR (void)
@@ -216,24 +222,33 @@ void __attribute__ ((interrupt(TIMER0_A0_VECTOR))) Timer0_A0_ISR (void)
  // TA0CCR0 += 500000;                         // Add Offset to TA0CCR0
 }
 
+//Timer1A0 interrupt service routine
 
 #if defined(__TI_COMPILER_VERSION__) || defined(__IAR_SYSTEMS_ICC__)
-#pragma vector = TIMER0_A1_VECTOR
-__interrupt void Timer0_A1_ISR (void)
+#pragma vector = TIMER1_A0_VECTOR
+__interrupt void Timer1_A0_ISR (void)
 #elif defined(__GNUC__)
-void __attribute__ ((interrupt(TIMER0_A1_VECTOR))) Timer0_A1_ISR (void)
+void __attribute__ ((interrupt(TIMER1_A0_VECTOR))) Timer1_A0_ISR (void)
 #else
 #error Compiler not supported!
 #endif
 {
-  ++counter;
-  if(counter == 5000){
-  P4OUT ^= BIT6;
-  counter = 0;
-  ++count;
- // printf("%d minute(s) passed \n", count);
+  ++counter1;
+  if(counter1 == 2){
+      ADC12CTL0 |= ADC12ENC | ADC12SC;                    // Enable and start conversions
+      while (ADC12CTL1 & ADC12BUSY);
+      ADC_ResultA7 = ADC12MEM0;
+      ADC_ResultA10 = ADC12MEM1;
+      logic=Circuit_Logic(Vl2020);
+      sprintf(outbuffer, "%d:",ADC_ResultA7*2750/4095);
+      uartSend(outbuffer,5);
+      sprintf(outbuffer, "%d \r\n",ADC_ResultA10*2750/4095);
+      uartSend(outbuffer,7);
+      ++count1;
+     // printf("%d second(s) passed \n", count1);
+      P4OUT ^= BIT6;
+      counter1 = 0;
   }
- // TA0CCR0 += 500000;                         // Add Offset to TA0CCR0
 }
 
 

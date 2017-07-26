@@ -1,6 +1,72 @@
 #include <functions.h>
 
 
+
+
+
+void Init_Battery(Battery* Battery_Init, Status Bat_Status, uint8_t Position){
+    Battery_Init->Battery_Status = Bat_Status;
+    switch(Position){
+    case Position_One:
+        ADC12CTL0 |= ADC12ENC | ADC12SC;                    // Enable and start conversions
+        while (ADC12CTL1 & ADC12BUSY);
+        Battery_Init->Voltage = ADC12MEM0;
+        break;
+    case Position_Two:
+        ADC12CTL0 |= ADC12ENC | ADC12SC;                    // Enable and start conversions
+        while (ADC12CTL1 & ADC12BUSY);
+        Battery_Init->Voltage = ADC12MEM1;
+        break;
+    default:
+        break;
+
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+uint8_t Circuit_Logic(Battery* Battery_Check){
+    if(Battery_Check->Battery_Status == Not_Connected){
+        return 0;
+    }
+    else if(Battery_Check->Battery_Status == Charging){
+        if(Battery_Check->Voltage /*+ Battery_Check->Voltage[0])/2 */>= Charging_Threshold){
+            printf("Charging threshold reached, Switching");
+          //  Switch(*Battery_Check);
+            return 0;
+        }
+        else if(Battery_Check->Voltage/*[0] + Battery_Check->Voltage[0])/2*/ < (Discharging_Threshold - 100) ){
+            return 1;
+            }
+        else{
+            return 0;
+        }
+    }
+    else if (Battery_Check->Battery_Status == Discharging){
+        if(Battery_Check->Voltage /*[0] + Battery_Check->Voltage[0])/2*/ <= Discharging_Threshold){
+          //  Switch(*Battery_Check);
+            printf("Discharging threshold reached, Switching");
+            return 0;
+        }
+        else if(Battery_Check->Voltage/*[0] + Battery_Check->Voltage[0])/2*/ >= (Charging_Threshold + 100 ) ){
+            return 1;
+            }
+        else {
+            return 0;
+        }
+    }
+    return 0;
+}
+
  void Init_Clock(void){
            CSCTL0_H = CSKEY >> 8;
            CSCTL1 = DCOFSEL_0;// | DCORSEL;
@@ -33,16 +99,16 @@
     P2SEL1 |= BIT5 | BIT6;                    // USCI_A1 UART operation
     PM5CTL0 &= ~LOCKLPM5;
 }
- void Init_Timer0(void){
+void Init_Timer0(void){
         TA0CCTL0 = CCIE;                          // TACCR0 interrupt enabled
      //   TA0CCR0 = 500000;
         TA0CTL = TASSEL__SMCLK | MC__CONTINOUS;   // SMCLK, continuous mode
 }
 
  void Init_Timer1(void){
-        TA0CCTL1 = CCIE;                          // TACCR0 interrupt enabled
-        TA0CCR0 = 5000;
-        TA0CTL = TASSEL__SMCLK | MC__UP;   // SMCLK, continuous mode
+        TA1CCTL0 = CCIE;                          // TACCR0 interrupt enabled
+     //   TA1CCR0 = 5000;
+        TA1CTL = TASSEL__SMCLK | MC__CONTINOUS | ID_3;   // SMCLK, up mode // divided by 8 = 1.9 Hz
 }
 
 
