@@ -18,9 +18,8 @@ volatile int count = 0;
 volatile int count1 = 0;
 uint8_t logic=0;
 uint8_t length=0;
-
-Battery* Vl2020;
-Battery* Capacitor;
+Battery Vl2020;
+Battery Capacitor;
 void main(void)
 {
     WDTCTL = WDTPW+WDTHOLD;                   // Stop watchdog timer
@@ -31,7 +30,14 @@ void main(void)
     Init_Timer1();
     Init_ADC();
     Init_UART();
-    Init_Battery(Vl2020,Not_Connected ,Position_One);
+    /*printf("status is ssss %d\n", Discharging);
+    printf("status is ssss %d\n", Charging);
+    printf("status is ssss %d\n", Not_Connected);
+    printf("status das %d\n", Vl2020.Battery_Status);
+    printf("voltage das %d\n", Vl2020.Voltage);*/
+    Init_Battery(&Vl2020,Discharging ,Position_One);
+    Init_Battery(&Capacitor,Charging ,Position_Two);
+
   while(1){
 
   }
@@ -156,7 +162,7 @@ __interrupt void Port_4(void)
              sprintf(outbuffer, "\r\nDischarging battery number %d",Discharge_Bat_Num);
              length= sizeof(outbuffer);
              uartSend(outbuffer,length);                   // Load data onto buffer
-             sprintf(outbuffer, "\r\nVoltage = %d mV",ADC_ResultA7*2750/4095);
+             sprintf(outbuffer, "\r\nVoltage = %d mV",ADC_ResultA7*3000/4095);
              length= sizeof(outbuffer);
              uartSend(outbuffer,17);
              Charge_Bat_Num++;
@@ -191,8 +197,37 @@ void __attribute__ ((interrupt(USCI_A0_VECTOR))) USCI_A0_ISR (void)
     case USCI_UART_UCRXIFG:
         if (UCA1RXBUF == 'a') // 'u' received?
         {
-            uartSend(outbuffer,17);                   // Load data onto buffer
+           // uartSend(outbuffer,17);                   // Load data onto buffer
+        // printf("RX ISR\n");
+         test = 1;
+         printf("Test = 1\n");
+         logic=Circuit_Logic(&Vl2020);
+         if(logic == 1){
+             printf("ERROR OCCURED at Position %d \n",Vl2020.Position);
+         }
+         logic=Circuit_Logic(&Capacitor);
+         if(logic == 1){
+             printf("ERROR OCCURED at position %d \n", Capacitor.Position);
+         }
+
+        }
+        if (UCA1RXBUF == 'b') // 'u' received?
+        {
+           // uartSend(outbuffer,17);                   // Load data onto buffer
          //  printf("RX ISR\n");
+         test = 2;
+         printf("Test = 2\n");
+         logic=Circuit_Logic(&Vl2020);
+         logic=Circuit_Logic(&Capacitor);
+        }
+        if (UCA1RXBUF == 'c') // 'u' received?
+        {
+           // uartSend(outbuffer,17);                   // Load data onto buffer
+         //  printf("RX ISR\n");
+         test = 3;
+         printf("Test = 3\n");
+         logic=Circuit_Logic(&Vl2020);
+         logic=Circuit_Logic(&Capacitor);
         }
       break;
     case USCI_UART_UCTXIFG:break;
@@ -235,17 +270,29 @@ void __attribute__ ((interrupt(TIMER1_A0_VECTOR))) Timer1_A0_ISR (void)
 {
   ++counter1;
   if(counter1 == 2){
-      ADC12CTL0 |= ADC12ENC | ADC12SC;                    // Enable and start conversions
-      while (ADC12CTL1 & ADC12BUSY);
-      ADC_ResultA7 = ADC12MEM0;
-      ADC_ResultA10 = ADC12MEM1;
-      logic=Circuit_Logic(Vl2020);
+     // ADC12CTL0 |= ADC12ENC | ADC12SC;                    // Enable and start conversions
+     // while (ADC12CTL1 & ADC12BUSY);
+     // ADC_ResultA7 = ADC12MEM0;
+     // ADC_ResultA10 = ADC12MEM1;
+    /*  logic=Circuit_Logic(Vl2020, Position_One);
+      if(logic==1){
+          printf("ERROR TOOK PLACE!!!");
+          logic=0;
+      }*/
+    /*  logic=Circuit_Logic(Capacitor, Position_Two);
+      if(logic==1){
+          printf("ERROR TOOK PLACE!!!");
+          logic=0;
+      }*/
+
+     /*
       sprintf(outbuffer, "%d:",ADC_ResultA7*2750/4095);
       uartSend(outbuffer,5);
       sprintf(outbuffer, "%d \r\n",ADC_ResultA10*2750/4095);
       uartSend(outbuffer,7);
       ++count1;
      // printf("%d second(s) passed \n", count1);
+      */
       P4OUT ^= BIT6;
       counter1 = 0;
   }

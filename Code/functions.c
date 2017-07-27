@@ -4,18 +4,33 @@
 
 
 
-void Init_Battery(Battery* Battery_Init, Status Bat_Status, uint8_t Position){
+void Init_Battery(Battery* Battery_Init, Status Bat_Status, uint8_t Position/*, uint16_t voltage*/){
     Battery_Init->Battery_Status = Bat_Status;
-    switch(Position){
+    Battery_Init->Position = Position;
+    Result = 0;
+    test = 0;
+   // Battery_Init->Voltage = voltage;
+    //printf("voltage is %d\n",Battery_Init->Voltage);
+    switch(Battery_Init->Position){
     case Position_One:
-        ADC12CTL0 |= ADC12ENC | ADC12SC;                    // Enable and start conversions
+      /*  ADC12CTL0 |= ADC12ENC | ADC12SC;                    // Enable and start conversions
         while (ADC12CTL1 & ADC12BUSY);
-        Battery_Init->Voltage = ADC12MEM0;
+        Result = ADC12MEM7*3000/4095;
+        Battery_Init->Voltage = Result;*/
+        Battery_Init->Voltage = 1900;
+        printf("status is %d \n", Battery_Init->Battery_Status);
         break;
     case Position_Two:
-        ADC12CTL0 |= ADC12ENC | ADC12SC;                    // Enable and start conversions
+       /* ADC12CTL0 |= ADC12ENC | ADC12SC;                    // Enable and start conversions
         while (ADC12CTL1 & ADC12BUSY);
-        Battery_Init->Voltage = ADC12MEM1;
+        Result = ADC12MEM10*3000/4095;
+        Battery_Init->Voltage = Result;*/
+        Battery_Init->Voltage = 2950;
+        printf("status second is %d \n", Battery_Init->Battery_Status);
+        if(Battery_Init->Battery_Status == 1)
+            printf("charging");
+        if(Battery_Init->Battery_Status == Discharging)
+            printf("Discharging");
         break;
     default:
         break;
@@ -24,23 +39,57 @@ void Init_Battery(Battery* Battery_Init, Status Bat_Status, uint8_t Position){
 
 }
 
-
-
-
-
-
-
-
-
-
-
 uint8_t Circuit_Logic(Battery* Battery_Check){
+
+    switch(Battery_Check->Position){
+        case Position_One:
+          /* ADC12CTL0 |= ADC12ENC | ADC12SC;                    // Enable and start conversions
+            while (ADC12CTL1 & ADC12BUSY);
+            Result = ADC12MEM10*3000/4095;
+            Battery_Check->Voltage = Result;*/
+            if(test ==1){
+            Battery_Check->Voltage = 3200;
+            printf("Position One Voltage = %d \n",Battery_Check->Voltage);
+           //printf("status is %d \n", Battery_Check->Battery_Status);
+
+            }
+            else if(test ==2){
+            Battery_Check->Voltage = 900;
+            printf("Position one Voltage = %d \n",Battery_Check->Voltage);
+            }
+            else if(test ==3){
+            Battery_Check->Voltage = 1100;
+            printf("Position one voltage = %d \n",Battery_Check->Voltage);
+            }
+            break;
+        case Position_Two:
+          /*  ADC12CTL0 |= ADC12ENC | ADC12SC;                    // Enable and start conversions
+            while (ADC12CTL1 & ADC12BUSY);
+            Result = ADC12MEM7*3000/4095;
+            Battery_Check->Voltage = Result;*/
+            if(test ==1){
+            Battery_Check->Voltage = 899;
+            printf("Position two voltage = %d \n",Battery_Check->Voltage);
+            }
+            else if(test ==2){
+            Battery_Check->Voltage = 2900;
+            printf("Position two voltage = %d \n",Battery_Check->Voltage);
+            }
+            else if(test ==3){
+            Battery_Check->Voltage = 3100;
+            printf("Position two voltage = %d \n",Battery_Check->Voltage);
+            }
+            break;
+        default:
+            break;
+        }
+
     if(Battery_Check->Battery_Status == Not_Connected){
         return 0;
     }
     else if(Battery_Check->Battery_Status == Charging){
         if(Battery_Check->Voltage /*+ Battery_Check->Voltage[0])/2 */>= Charging_Threshold){
-            printf("Charging threshold reached, Switching");
+            printf("Charging threshold reached, Switching\n");
           //  Switch(*Battery_Check);
             return 0;
         }
@@ -54,7 +103,7 @@ uint8_t Circuit_Logic(Battery* Battery_Check){
     else if (Battery_Check->Battery_Status == Discharging){
         if(Battery_Check->Voltage /*[0] + Battery_Check->Voltage[0])/2*/ <= Discharging_Threshold){
           //  Switch(*Battery_Check);
-            printf("Discharging threshold reached, Switching");
+            printf("Discharging threshold reached, Switching\n");
             return 0;
         }
         else if(Battery_Check->Voltage/*[0] + Battery_Check->Voltage[0])/2*/ >= (Charging_Threshold + 100 ) ){
@@ -64,6 +113,7 @@ uint8_t Circuit_Logic(Battery* Battery_Check){
             return 0;
         }
     }
+    printf("\n\n\n\n\n\n");
     return 0;
 }
 

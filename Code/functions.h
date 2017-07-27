@@ -22,10 +22,15 @@
 //Define Charging and Discharging thresholds.
 #define Charging_Threshold 3000
 #define Discharging_Threshold 1000
-typedef enum {Not_Connected,Charging,Discharging} Status;
-typedef struct Battery{
-    Status Battery_Status;
+/*#define Not_Connected 0
+#define Charging 1
+#define Discharging 2
+*/
+typedef enum {Not_Connected = 0,Charging = 2,Discharging = 1} Status;
+typedef struct{
+      Status Battery_Status;
    // volatile unsigned long Voltage[10];
+      uint8_t Position;
     volatile unsigned long Voltage;
 }Battery;
 
@@ -35,9 +40,9 @@ extern void Init_Timer0(void);
 extern void Init_Timer1(void);
 extern void Init_ADC(void);
 extern void Init_UART(void);
-extern void Init_Battery(Battery*, Status , uint8_t);
+extern void Init_Battery(Battery*, Status , uint8_t/*, uint16_t*/);
 extern uint8_t Circuit_Logic(Battery*);
 extern void uartSend(unsigned char *pucData, unsigned char ucLength);
-
-
+volatile unsigned long Result;
+uint8_t test;
 #endif /* MAIN_H_ */
