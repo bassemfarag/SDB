@@ -195,10 +195,8 @@ void __attribute__ ((interrupt(USCI_A0_VECTOR))) USCI_A0_ISR (void)
   {
     case USCI_NONE: break;
     case USCI_UART_UCRXIFG:
-        if (UCA1RXBUF == 'a') // 'u' received?
-        {
-           // uartSend(outbuffer,17);                   // Load data onto buffer
-        // printf("RX ISR\n");
+        if (UCA1RXBUF == 'a'){ // 'u' received?
+         // uartSend(outbuffer,17);                   // Load data onto buffer
          test = 1;
          printf("Test = 1\n");
          logic=Circuit_Logic(&Vl2020);
@@ -211,19 +209,15 @@ void __attribute__ ((interrupt(USCI_A0_VECTOR))) USCI_A0_ISR (void)
          }
 
         }
-        if (UCA1RXBUF == 'b') // 'u' received?
-        {
+        if (UCA1RXBUF == 'b'){
            // uartSend(outbuffer,17);                   // Load data onto buffer
-         //  printf("RX ISR\n");
          test = 2;
          printf("Test = 2\n");
          logic=Circuit_Logic(&Vl2020);
          logic=Circuit_Logic(&Capacitor);
         }
-        if (UCA1RXBUF == 'c') // 'u' received?
-        {
+        if (UCA1RXBUF == 'c'){
            // uartSend(outbuffer,17);                   // Load data onto buffer
-         //  printf("RX ISR\n");
          test = 3;
          printf("Test = 3\n");
          logic=Circuit_Logic(&Vl2020);

@@ -43,6 +43,7 @@ extern void Init_UART(void);
 extern void Init_Battery(Battery*, Status , uint8_t/*, uint16_t*/);
 extern uint8_t Circuit_Logic(Battery*);
 extern void uartSend(unsigned char *pucData, unsigned char ucLength);
+//extern void Switch(Battery*);
 volatile unsigned long Result;
 uint8_t test;
 #endif /* MAIN_H_ */
