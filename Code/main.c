@@ -1,29 +1,16 @@
 // First_Battery is connected to Pin A7.
 // Second_Battery is connected to Pin A10.
 #include <functions.h>
-
-#define Num_of_Results   50
-volatile uint8_t Charge_Bat_Num = 0;
-volatile uint8_t Discharge_Bat_Num = 0;
-volatile unsigned long ADC_ResultA7 = 0;   /* ADC_ResultA7, ADC_ResultA10 must be long to avoid overflow when converting into mV*/
-volatile unsigned long ADC_ResultA10 = 0;
-//volatile uint8_t i;
-//volatile uint8_t p=0;
-volatile bool Button1_Pressed = 0;
-volatile bool Button4_Pressed = 0;
-unsigned char outbuffer[Num_of_Results]={0};
-volatile int counter  = 0;
-volatile int counter1 = 0;
-volatile int count = 0;
-volatile int count1 = 0;
-uint8_t logic=0;
-uint8_t length=0;
-Battery Vl2020;
-Battery Capacitor;
 void main(void)
 {
     WDTCTL = WDTPW+WDTHOLD;                   // Stop watchdog timer
     PM5CTL0 &= ~LOCKLPM5;
+    ADC_ResultA7 = 0;
+    ADC_ResultA10 = 0;
+    Charge_Bat_Num = Discharge_Bat_Num = logic = length = 0;
+    Button4_Pressed = 0;
+    Button1_Pressed = 0;
+    counter = counter1 = count = count1 = 0;
     Init_Clock();
     Init_Gpio();
     Init_Timer0();
@@ -35,6 +22,7 @@ void main(void)
     printf("status is ssss %d\n", Not_Connected);
     printf("status das %d\n", Vl2020.Battery_Status);
     printf("voltage das %d\n", Vl2020.Voltage);*/
+
     Init_Battery(&Vl2020,Discharging ,Position_One);
     Init_Battery(&Capacitor,Charging ,Position_Two);
 
@@ -81,11 +69,11 @@ __interrupt void Port_1(void)
                     P1OUT |= BIT4;
                     printf("Charging Battery number %d \n", Charge_Bat_Num);
                 }
-                     printf("First Battery Voltage = %d mV \n",ADC_ResultA7*2375/4095);
-                     printf("Second Battery Voltage = %d mV\n",ADC_ResultA10*2375/4095);              sprintf(outbuffer, "\r\nCharging battery number %d",Charge_Bat_Num);
-                     length= sizeof(outbuffer);
-                     uartSend(outbuffer,length);                   // Load data onto buffer
-                     sprintf(outbuffer, "\r\nVoltage = %d mV",ADC_ResultA7*3610/4095);
+                     printf("First Battery Voltage = %d mV \n",ADC_ResultA7*3600/4095);
+                     printf("Second Battery Voltage = %d mV\n",ADC_ResultA10*3600/4095);              sprintf(outbuffer, "\r\nCharging battery number %d",Charge_Bat_Num);
+                    // length= sizeof(outbuffer);
+                     //uartSend(outbuffer,length);                   // Load data onto buffer
+                     sprintf(outbuffer, "\r\nVoltage = %d mV",ADC_ResultA7*3600/4095);
                      length= sizeof(outbuffer);
                      uartSend(outbuffer,17);
                      Charge_Bat_Num++;
@@ -243,10 +231,10 @@ void __attribute__ ((interrupt(TIMER0_A0_VECTOR))) Timer0_A0_ISR (void)
 {
   ++counter;
   if(counter == 1459){
-  P1OUT ^= BIT0;
+ // P1OUT ^= BIT0;
   counter = 0;
   ++count;
-  printf("%d minute(s) passed \n", count);
+ // printf("%d minute(s) passed \n", count);
   }
  // TA0CCR0 += 500000;                         // Add Offset to TA0CCR0
 }
@@ -268,16 +256,16 @@ void __attribute__ ((interrupt(TIMER1_A0_VECTOR))) Timer1_A0_ISR (void)
      // while (ADC12CTL1 & ADC12BUSY);
      // ADC_ResultA7 = ADC12MEM0;
      // ADC_ResultA10 = ADC12MEM1;
-    /*  logic=Circuit_Logic(Vl2020, Position_One);
+      logic=Circuit_Logic(&Vl2020);
       if(logic==1){
           printf("ERROR TOOK PLACE!!!");
           logic=0;
-      }*/
-    /*  logic=Circuit_Logic(Capacitor, Position_Two);
+      }
+      logic=Circuit_Logic(&Capacitor);
       if(logic==1){
           printf("ERROR TOOK PLACE!!!");
           logic=0;
-      }*/
+      }
 
      /*
       sprintf(outbuffer, "%d:",ADC_ResultA7*2750/4095);
