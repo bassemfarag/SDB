@@ -5,8 +5,7 @@ void main(void)
 {
     WDTCTL = WDTPW+WDTHOLD;                   // Stop watchdog timer
     PM5CTL0 &= ~LOCKLPM5;
-    ADC_ResultA7 = 0;
-    ADC_ResultA10 = 0;
+    ADC_ResultA7 = ADC_ResultA10 = ADC_ResultA3 = 0;
     Charge_Bat_Num = Discharge_Bat_Num = logic = length = 0;
     Button4_Pressed = 0;
     Button1_Pressed = 0;
@@ -17,6 +16,7 @@ void main(void)
     Init_Timer1();
     Init_ADC();
     Init_UART();
+    printf("I am in init");
     /*printf("status is ssss %d\n", Discharging);
     printf("status is ssss %d\n", Charging);
     printf("status is ssss %d\n", Not_Connected);
@@ -28,6 +28,7 @@ void main(void)
 
   while(1){
 
+    //  __delay_cycles(10000);
   }
 }
 
