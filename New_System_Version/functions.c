@@ -8,7 +8,7 @@ void Init_Battery(Battery* Battery_Init, Status Bat_Status, uint8_t Position/*, 
    // Battery_Init->Voltage = voltage;
     //printf("voltage is %d\n",Battery_Init->Voltage);
     switch(Battery_Init->Position){
-    case Position_One:
+    case POSITION_ONE:
         ADC12CTL0 |= ADC12ENC | ADC12SC;      // Enable and start conversions
         while (ADC12CTL1 & ADC12BUSY);
         ADC_ResultA7 = ADC12MEM0;
@@ -24,7 +24,7 @@ void Init_Battery(Battery* Battery_Init, Status Bat_Status, uint8_t Position/*, 
         //printf("Discharging\n");
 
         break;
-    case Position_Two:
+    case POSITION_TWO:
         ADC12CTL0 |= ADC12ENC | ADC12SC;     // Enable and start conversions
         while (ADC12CTL1 & ADC12BUSY);
         ADC_ResultA10 = ADC12MEM1;
@@ -44,8 +44,8 @@ void Init_Battery(Battery* Battery_Init, Status Bat_Status, uint8_t Position/*, 
         ADC_ResultA11 = ADC12MEM2;
         Result = ADC_ResultA11*3600/4095;
         Battery_Init->Voltage = Result;
-        if( Battery_Init->Voltage <= Vout_Discharging_Voltage){
-            printf("Vout < %d \n",Vout_Discharging_Voltage);
+        if( Battery_Init->Voltage <= VOUT_DISCHARGING_THRESHOLD){
+            printf("Vout < %d \n",VOUT_DISCHARGING_THRESHOLD);
             P1OUT &= ~BIT4;   // Set Vl2020 to be Discharged.
             P1OUT &= ~BIT5;
             Vl2020.Battery_Status = Discharging;
@@ -53,8 +53,8 @@ void Init_Battery(Battery* Battery_Init, Status Bat_Status, uint8_t Position/*, 
             P3OUT |= BIT4; // Set Capacitor to be Charged.
             Capacitor.Battery_Status = Charging;
         }
-        else if(Battery_Init->Voltage >= Vout_Discharging_Voltage){
-            printf("Vout > %d \n",Vout_Discharging_Voltage);
+        else if(Battery_Init->Voltage >= VOUT_DISCHARGING_THRESHOLD){
+            printf("Vout > %d \n",VOUT_DISCHARGING_THRESHOLD);
             P1OUT |= BIT4;    // Set the source to VOUT
             P1OUT |= BIT5;
             Battery_Init->Battery_Status = Discharging;
@@ -94,7 +94,6 @@ void Init_Gpio(void){
     P4IE |= BIT5;                                // P1.3 interrupt enabled
     P4IFG &= ~BIT5;                            // P4.5 interrupt flag cleared
     P3OUT &= ~BIT4;
-    P4OUT &= ~BIT3; // ensure that it is logic 0;
     P2SEL0 &= ~(BIT5 | BIT6);
     P2SEL1 |= BIT5 | BIT6;                    // USCI_A1 UART operation
    // P1SEL0 &= ~BIT3;
@@ -127,9 +126,9 @@ void Init_ADC(void){
     ADC12CTL0 |= ADC12MSC + ADC12SHT0_2 + ADC12SHT1_2; // Turn on ADC12, one SHI trigger is needed, extend sampling time (256 ADC12CLK cycles) // to avoid overflow of results
     ADC12CTL1 |= ADC12SSEL_3;                   // clk source: SMCLK
     ADC12CTL1 |= ADC12SHP +ADC12CONSEQ_1;       // Use sampling timer, repeated sequence
-    ADC12MCTL0 |= /*ADC12VRSEL_1 + */ ADC12INCH_7;                 // ref+=AVcc, channel = A7
-    ADC12MCTL1 |= /*ADC12VRSEL_1 + */ ADC12INCH_10;            // ref+=AVcc, channel = A10
-    ADC12MCTL2 |= ADC12INCH_11 + ADC12EOS;            // ref+=AVcc, channel = A11
+    ADC12MCTL0 |= /*ADC12VRSEL_1 + */ ADC12INCH_7;                 // ref+=AVcc, channel = A7(P2.4)
+    ADC12MCTL1 |= /*ADC12VRSEL_1 + */ ADC12INCH_10;            // ref+=AVcc, channel = A10(P4.2)
+    ADC12MCTL2 |= ADC12INCH_11 + ADC12EOS;            // ref+=AVcc, channel = A11(P4.3)
     while(!(REFCTL0 & REFGENRDY));            // Wait for reference generator to settle
     ADC12CTL2 |= ADC12RES_2;                   //  12 bit resolution        // ADC12RES_x defines the conversion result resolution.
     ADC12CTL0 |= ADC12ON;                       // Enable ADC12_B. This can only be modified if ADC12ENC = 0.
@@ -169,7 +168,7 @@ void uartSend(unsigned char *pucData, uint8_t ucLength)
 
 uint8_t Circuit_Logic(Battery* Battery_Check){
     switch(Battery_Check->Position){
-        case Position_One:
+        case POSITION_ONE:
             ADC12CTL0 |= ADC12ENC | ADC12SC;                    // Enable and start conversions
             while (ADC12CTL1 & ADC12BUSY);
             ADC_ResultA7 = ADC12MEM0;
@@ -194,7 +193,7 @@ aa
             //length= sizeof(Result+2);
             uartSend(outbuffer,5);
             break;
-        case Position_Two:
+        case POSITION_TWO:
             ADC12CTL0 |= ADC12ENC | ADC12SC;                    // Enable and start conversions
             while (ADC12CTL1 & ADC12BUSY);
             ADC_ResultA10 = ADC12MEM1;
@@ -228,6 +227,12 @@ aa
             sprintf(outbuffer, "%d\r\n",Result);
             //length= sizeof(Result+2);
             uartSend(outbuffer,6);
+            if((Vout.Voltage <= VOUT_DISCHARGING_THRESHOLD - 500) && (Battery_Check->Battery_Status == Discharging)){
+               Vout_Dropped();
+            }
+            else if((Vout.Voltage > VOUT_DISCHARGING_THRESHOLD + 900) && (Battery_Check->Battery_Status == Not_Connected)){
+               Vout_Recovered();
+            }
             break;
         default:
             break;
@@ -237,36 +242,42 @@ aa
         return 0;
     }
     else if(Battery_Check->Battery_Status == Charging){
-        if(Battery_Check->Voltage /*+ Battery_Check->Voltage[0])/2 */>= Charging_Threshold){
+        if(Battery_Check->Voltage /*+ Battery_Check->Voltage[0])/2 */>= CHARGING_THRESHOLD_VL2020){
              //yyy=0;
             //printf("Charging threshold reached at position %d , Switching\n", Battery_Check->Position);
             //Switch(Battery_Check);
-            if(Vout.Voltage <= Vout_Discharging_Voltage){
+            if(Vout.Voltage <= VOUT_DISCHARGING_THRESHOLD){
                Vout_Dropped();
                return 0;
             }
             else{
-               if(Battery_Check->Position == Position_One){
+               if(Battery_Check->Position == POSITION_ONE){
                    P3OUT |= BIT4; // Set Capacitor to be Charged.
                    Capacitor.Battery_Status = Charging;
                    Battery_Check->Battery_Status = Not_Connected;
                    printf("Normal round \n");
                    return 0;
                }
-               else if(Battery_Check->Position == Position_Two){
-                   if(Vl2020.Voltage < Charging_Threshold_VL2020){
-                       P3OUT &= ~BIT4; // Set Vl2020 to be Charged.
-                       Vl2020.Battery_Status = Charging;
-                       Battery_Check->Battery_Status = Not_Connected;
-               }
+               else if(Battery_Check->Position == POSITION_TWO){
+                   if(Battery_Check->Voltage /*+ Battery_Check->Voltage[0])/2 */>= CHARGING_THRESHOLD){
+                       if(Vl2020.Voltage < CHARGING_THRESHOLD_VL2020){
+                           printf("Charging VL2020\n");
+                           P3OUT &= ~BIT4; // Set Vl2020 to be Charged.
+                           Vl2020.Battery_Status = Charging;
+                           Battery_Check->Battery_Status = Not_Connected;
+                       }
+                       else{
+                       return 0;
+                       }
+                   }
                    else{
-                   return 0;
+                       return 0;
                    }
                }
             }
-            }
+         }
             /*
-            else if(Battery_Check->Voltage[0] + Battery_Check->Voltage[0])/2 < (Discharging_Threshold - 100) ){
+            else if(Battery_Check->Voltage[0] + Battery_Check->Voltage[0])/2 < (DISCHARGING_THRESHOLD - 100) ){
             return 1;
             }
             */
@@ -275,14 +286,20 @@ aa
         }
     }
     else if (Battery_Check->Battery_Status == Discharging){
-        if(Battery_Check->Voltage /*[0] + Battery_Check->Voltage[0])/2*/ <= Discharging_Threshold){
+        if(Battery_Check->Voltage /*[0] + Battery_Check->Voltage[0])/2*/ <= DISCHARGING_THRESHOLD){
              //yyy=0;
             //printf("Discharging threshold reached at position %d, Switching\n",Battery_Check->Position);
+            if(Vout.Voltage <= VOUT_DISCHARGING_THRESHOLD){
+                Vout_Dropped();
+                return 0;
+             }
+            else {
             Switch(Battery_Check);
             return 0;
+            }
         }
         /*
-        else if(Battery_Check->Voltage[0] + Battery_Check->Voltage[0])/2>= (Charging_Threshold + 100 ) ){
+        else if(Battery_Check->Voltage[0] + Battery_Check->Voltage[0])/2>= (CHARGING_THRESHOLD + 100 ) ){
             return 1;
             }
         */
@@ -294,10 +311,10 @@ aa
 }
 
 void Switch(Battery* Battery_Check){
-    if(Battery_Check->Position == Position_One){
+    if(Battery_Check->Position == POSITION_ONE){
         if(Battery_Check->Battery_Status == Charging){
            // printf("My status is %d and Switching to Position Two\n", Battery_Check->Battery_Status);
-            if(Vout.Voltage > Vout_Discharging_Voltage){
+            if(Vout.Voltage > VOUT_DISCHARGING_THRESHOLD){
                 Vout_Recovered();
             }
             else{
@@ -312,7 +329,7 @@ void Switch(Battery* Battery_Check){
         }
         else if(Battery_Check->Battery_Status == Discharging){
             //printf("My status is %d and Switching to Position Two\n", Battery_Check->Battery_Status);
-            if(Vout.Voltage > Vout_Discharging_Voltage){
+            if(Vout.Voltage > VOUT_DISCHARGING_THRESHOLD){
                 Vout_Recovered();
             }
             else{
@@ -332,13 +349,13 @@ void Switch(Battery* Battery_Check){
         }
        // printf("Switching to Position Two\n");
     }
-    else if(Battery_Check->Position == Position_Two){
+    else if(Battery_Check->Position == POSITION_TWO){
         if(Battery_Check->Battery_Status == Charging){
          //   printf("My status is %d and Switching to Position One \n", Battery_Check->Battery_Status);
            // P1OUT |= BIT4;  // Set Capacitor to be Discharged.
            // P1OUT &= ~BIT5;
            // Battery_Check->Battery_Status = Discharging;
-            if(Vl2020.Voltage > Charging_Threshold){
+            if(Vl2020.Voltage > CHARGING_THRESHOLD){
                 return;
             }
             else{
@@ -351,10 +368,10 @@ void Switch(Battery* Battery_Check){
            //printf("My status after switching is %d\n",Battery_Check->Battery_Status);
         }
         else if(Battery_Check->Battery_Status == Discharging){
-            if(Vout.Voltage > Vout_Discharging_Voltage){
+            if(Vout.Voltage > VOUT_DISCHARGING_THRESHOLD){
                 Vout_Recovered();
             }
-            else if(Vl2020.Voltage >= Discharging_Threshold){
+            else if(Vl2020.Voltage >= DISCHARGING_THRESHOLD){
             P1OUT &= ~BIT4;   // Set VL2020 to be Discharged.
             Vl2020.Battery_Status = Discharging;
             P3OUT |= BIT4; // Set Capacitor to be Charged.
@@ -381,15 +398,16 @@ void Vout_Dropped(void){
 }
 
 void Vout_Recovered(void){
-    if(Capacitor.Voltage >= Discharging_Threshold){
+   /* if(Capacitor.Voltage >= DISCHARGING_THRESHOLD){
     P1OUT |= BIT4;    // Set Capacitor to be Discharged.
     P1OUT &= ~BIT5;
     Capacitor.Battery_Status = Discharging;
-    }
+    }*/
     P1OUT |= BIT4;    // Set Vout to be Discharged.
     P1OUT |= BIT5;
     Vout.Battery_Status = Discharging;
     P3OUT |= BIT4; // Set Capacitor to be Charged.
     Capacitor.Battery_Status = Charging;
+    Vl2020.Battery_Status = Not_Connected;
     printf("Voltage recovered\n");
 }

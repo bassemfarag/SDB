@@ -21,8 +21,8 @@ void main(void)
     printf("status is ssss %d\n", Not_Connected);
     printf("status das %d\n", Vl2020.Battery_Status);
     printf("voltage das %d\n", Vl2020.Voltage);*/
-    Init_Battery(&Vl2020,Not_Connected ,Position_One);
-    Init_Battery(&Capacitor,Not_Connected ,Position_Two);
+    Init_Battery(&Vl2020,Not_Connected ,POSITION_ONE);
+    Init_Battery(&Capacitor,Not_Connected ,POSITION_TWO);
     Init_Battery(&Vout,Discharging ,POSITION_THREE);
 
   while(1){

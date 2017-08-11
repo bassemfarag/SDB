@@ -17,26 +17,26 @@
 #ifndef MAIN_H_
 #define MAIN_H_
 // Define the position of each battery relative to the available ADC pins.
-#define Position_One 100 //This Battery is connected to Pin A7.
-#define Position_Two 101 //This Battery is connected to Pin A10.
+#define POSITION_ONE 100 //This Battery is connected to Pin A7.
+#define POSITION_TWO 101 //This Battery is connected to Pin A10.
 #define POSITION_THREE 102 //This Battery is connected to Pin A11(P4.3).
 //Define Charging and Discharging thresholds.
-#define Charging_Threshold 3600
-#define Charging_Threshold_VL2020 3000
-#define Discharging_Threshold 1000
-#define Vout_Discharging_Voltage 1500
+#define CHARGING_THRESHOLD 3600
+#define CHARGING_THRESHOLD_VL2020 3000
+#define DISCHARGING_THRESHOLD 2000
+#define VOUT_DISCHARGING_THRESHOLD 2500
 /*#define Not_Connected 0
 #define Charging 1
 #define Discharging 2
 */
-#define Num_of_Results   50
+#define NUM_OF_RESULTS   50
 volatile uint8_t Charge_Bat_Num;
 volatile uint8_t Discharge_Bat_Num;
 //volatile uint8_t i;
 //volatile uint8_t p=0;
 volatile uint8_t Button1_Pressed;
 volatile uint8_t Button4_Pressed;
-unsigned char outbuffer[Num_of_Results];
+unsigned char outbuffer[NUM_OF_RESULTS];
 volatile int counter;
 volatile int counter1;
 volatile int count;
