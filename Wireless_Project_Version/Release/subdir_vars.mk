@@ -9,21 +9,33 @@ CMD_SRCS += \
 ../lnk_msp430fr5969.cmd 
 
 C_SRCS += \
-../main.c 
+../functions.c \
+../main.c \
+../test.c 
 
 C_DEPS += \
-./main.d 
+./functions.d \
+./main.d \
+./test.d 
 
 OBJS += \
-./main.obj 
+./functions.obj \
+./main.obj \
+./test.obj 
 
 OBJS__QUOTED += \
-"main.obj" 
+"functions.obj" \
+"main.obj" \
+"test.obj" 
 
 C_DEPS__QUOTED += \
-"main.d" 
+"functions.d" \
+"main.d" \
+"test.d" 
 
 C_SRCS__QUOTED += \
-"../main.c" 
+"../functions.c" \
+"../main.c" \
+"../test.c" 
 
 

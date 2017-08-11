@@ -1,6 +1,7 @@
 # FIXED
 
 main.obj: ../main.c
+main.obj: C:/Users/Eng.Bassem/workspace_v7/Wireless/functions.h
 main.obj: C:/Users/Eng.Bassem/workspace_v7/Wireless/driverlib/MSP430FR5xx_6xx/driverlib.h
 main.obj: C:/Users/Eng.Bassem/workspace_v7/Wireless/driverlib/MSP430FR5xx_6xx/inc/hw_memmap.h
 main.obj: C:/ti/ccsv7/ccs_base/msp430/include/msp430.h
@@ -40,8 +41,15 @@ main.obj: C:/Users/Eng.Bassem/workspace_v7/Wireless/driverlib/MSP430FR5xx_6xx/ti
 main.obj: C:/Users/Eng.Bassem/workspace_v7/Wireless/driverlib/MSP430FR5xx_6xx/timer_b.h
 main.obj: C:/Users/Eng.Bassem/workspace_v7/Wireless/driverlib/MSP430FR5xx_6xx/tlv.h
 main.obj: C:/Users/Eng.Bassem/workspace_v7/Wireless/driverlib/MSP430FR5xx_6xx/wdt_a.h
+main.obj: C:/ti/ccsv7/tools/compiler/ti-cgt-msp430_16.9.1.LTS/include/stdio.h
+main.obj: C:/ti/ccsv7/tools/compiler/ti-cgt-msp430_16.9.1.LTS/include/linkage.h
+main.obj: C:/ti/ccsv7/tools/compiler/ti-cgt-msp430_16.9.1.LTS/include/stdarg.h
+main.obj: C:/ti/ccsv7/tools/compiler/ti-cgt-msp430_16.9.1.LTS/include/stddef.h
+main.obj: C:/ti/ccsv7/tools/compiler/ti-cgt-msp430_16.9.1.LTS/include/stdlib.h
+main.obj: C:/ti/ccsv7/tools/compiler/ti-cgt-msp430_16.9.1.LTS/include/string.h
 
 ../main.c: 
+C:/Users/Eng.Bassem/workspace_v7/Wireless/functions.h: 
 C:/Users/Eng.Bassem/workspace_v7/Wireless/driverlib/MSP430FR5xx_6xx/driverlib.h: 
 C:/Users/Eng.Bassem/workspace_v7/Wireless/driverlib/MSP430FR5xx_6xx/inc/hw_memmap.h: 
 C:/ti/ccsv7/ccs_base/msp430/include/msp430.h: 
@@ -81,3 +89,9 @@ C:/Users/Eng.Bassem/workspace_v7/Wireless/driverlib/MSP430FR5xx_6xx/timer_a.h:
 C:/Users/Eng.Bassem/workspace_v7/Wireless/driverlib/MSP430FR5xx_6xx/timer_b.h: 
 C:/Users/Eng.Bassem/workspace_v7/Wireless/driverlib/MSP430FR5xx_6xx/tlv.h: 
 C:/Users/Eng.Bassem/workspace_v7/Wireless/driverlib/MSP430FR5xx_6xx/wdt_a.h: 
+C:/ti/ccsv7/tools/compiler/ti-cgt-msp430_16.9.1.LTS/include/stdio.h: 
+C:/ti/ccsv7/tools/compiler/ti-cgt-msp430_16.9.1.LTS/include/linkage.h: 
+C:/ti/ccsv7/tools/compiler/ti-cgt-msp430_16.9.1.LTS/include/stdarg.h: 
+C:/ti/ccsv7/tools/compiler/ti-cgt-msp430_16.9.1.LTS/include/stddef.h: 
+C:/ti/ccsv7/tools/compiler/ti-cgt-msp430_16.9.1.LTS/include/stdlib.h: 
+C:/ti/ccsv7/tools/compiler/ti-cgt-msp430_16.9.1.LTS/include/string.h: 
