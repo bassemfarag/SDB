@@ -1,0 +1,951 @@
+# Created by Ultra Librarian Gold 8.2.62 Copyright © 1999-2017
+# Frank Frank, Accelerated Designs
+
+Grid mil;
+Set Wire_Bend 2;
+
+
+Edit 'RGZ48_4P1X4P1.pac';
+Layer 1;
+Smd '1' 11.02 33.46 -0 R270 NOCREAM (-136.811 108.2677);
+Layer 1;
+Smd '2' 11.02 33.46 -0 R270 NOCREAM (-136.811 88.5827);
+Layer 1;
+Smd '3' 11.02 33.46 -0 R270 NOCREAM (-136.811 68.8976);
+Layer 1;
+Smd '4' 11.02 33.46 -0 R270 NOCREAM (-136.811 49.2126);
+Layer 1;
+Smd '5' 11.02 33.46 -0 R270 NOCREAM (-136.811 29.5276);
+Layer 1;
+Smd '6' 11.02 33.46 -0 R270 NOCREAM (-136.811 9.8425);
+Layer 1;
+Smd '7' 11.02 33.46 -0 R270 NOCREAM (-136.811 -9.8425);
+Layer 1;
+Smd '8' 11.02 33.46 -0 R270 NOCREAM (-136.811 -29.5276);
+Layer 1;
+Smd '9' 11.02 33.46 -0 R270 NOCREAM (-136.811 -49.2126);
+Layer 1;
+Smd '10' 11.02 33.46 -0 R270 NOCREAM (-136.811 -68.8976);
+Layer 1;
+Smd '11' 11.02 33.46 -0 R270 NOCREAM (-136.811 -88.5827);
+Layer 1;
+Smd '12' 11.02 33.46 -0 R270 NOCREAM (-136.811 -108.2677);
+Layer 1;
+Smd '13' 11.02 33.46 -0 R180 NOCREAM (-108.295 -136.811);
+Layer 1;
+Smd '14' 11.02 33.46 -0 R180 NOCREAM (-88.605 -136.811);
+Layer 1;
+Smd '15' 11.02 33.46 -0 R180 NOCREAM (-68.915 -136.811);
+Layer 1;
+Smd '16' 11.02 33.46 -0 R180 NOCREAM (-49.225 -136.811);
+Layer 1;
+Smd '17' 11.02 33.46 -0 R180 NOCREAM (-29.535 -136.811);
+Layer 1;
+Smd '18' 11.02 33.46 -0 R180 NOCREAM (-9.845 -136.811);
+Layer 1;
+Smd '19' 11.02 33.46 -0 R180 NOCREAM (9.845 -136.811);
+Layer 1;
+Smd '20' 11.02 33.46 -0 R180 NOCREAM (29.535 -136.811);
+Layer 1;
+Smd '21' 11.02 33.46 -0 R180 NOCREAM (49.225 -136.811);
+Layer 1;
+Smd '22' 11.02 33.46 -0 R180 NOCREAM (68.915 -136.811);
+Layer 1;
+Smd '23' 11.02 33.46 -0 R180 NOCREAM (88.605 -136.811);
+Layer 1;
+Smd '24' 11.02 33.46 -0 R180 NOCREAM (108.295 -136.811);
+Layer 1;
+Smd '25' 11.02 33.46 -0 R270 NOCREAM (136.811 -108.2677);
+Layer 1;
+Smd '26' 11.02 33.46 -0 R270 NOCREAM (136.811 -88.5827);
+Layer 1;
+Smd '27' 11.02 33.46 -0 R270 NOCREAM (136.811 -68.8976);
+Layer 1;
+Smd '28' 11.02 33.46 -0 R270 NOCREAM (136.811 -49.2126);
+Layer 1;
+Smd '29' 11.02 33.46 -0 R270 NOCREAM (136.811 -29.5276);
+Layer 1;
+Smd '30' 11.02 33.46 -0 R270 NOCREAM (136.811 -9.8425);
+Layer 1;
+Smd '31' 11.02 33.46 -0 R270 NOCREAM (136.811 9.8425);
+Layer 1;
+Smd '32' 11.02 33.46 -0 R270 NOCREAM (136.811 29.5276);
+Layer 1;
+Smd '33' 11.02 33.46 -0 R270 NOCREAM (136.811 49.2126);
+Layer 1;
+Smd '34' 11.02 33.46 -0 R270 NOCREAM (136.811 68.8976);
+Layer 1;
+Smd '35' 11.02 33.46 -0 R270 NOCREAM (136.811 88.5827);
+Layer 1;
+Smd '36' 11.02 33.46 -0 R270 NOCREAM (136.811 108.2677);
+Layer 1;
+Smd '37' 11.02 33.46 -0 R180 NOCREAM (108.295 136.811);
+Layer 1;
+Smd '38' 11.02 33.46 -0 R180 NOCREAM (88.605 136.811);
+Layer 1;
+Smd '39' 11.02 33.46 -0 R180 NOCREAM (68.915 136.811);
+Layer 1;
+Smd '40' 11.02 33.46 -0 R180 NOCREAM (49.225 136.811);
+Layer 1;
+Smd '41' 11.02 33.46 -0 R180 NOCREAM (29.535 136.811);
+Layer 1;
+Smd '42' 11.02 33.46 -0 R180 NOCREAM (9.845 136.811);
+Layer 1;
+Smd '43' 11.02 33.46 -0 R180 NOCREAM (-9.845 136.811);
+Layer 1;
+Smd '44' 11.02 33.46 -0 R180 NOCREAM (-29.535 136.811);
+Layer 1;
+Smd '45' 11.02 33.46 -0 R180 NOCREAM (-49.225 136.811);
+Layer 1;
+Smd '46' 11.02 33.46 -0 R180 NOCREAM (-68.915 136.811);
+Layer 1;
+Smd '47' 11.02 33.46 -0 R180 NOCREAM (-88.605 136.811);
+Layer 1;
+Smd '48' 11.02 33.46 -0 R180 NOCREAM (-108.295 136.811);
+Layer 1;
+Smd '49' 161.4173 161.4173 -0 R0 NOCREAM (0 0);
+Change Drill 10;
+Pad 'V' Round 0 20 R0 (-62 -62);
+Change Drill 10;
+Pad 'V_1' Round 0 20 R0 (-62 -31);
+Change Drill 10;
+Pad 'V_2' Round 0 20 R0 (-62 0);
+Change Drill 10;
+Pad 'V_3' Round 0 20 R0 (-62 31);
+Change Drill 10;
+Pad 'V_4' Round 0 20 R0 (-62 62);
+Change Drill 10;
+Pad 'V_5' Round 0 20 R0 (-31 -62);
+Change Drill 10;
+Pad 'V_6' Round 0 20 R0 (-31 -31);
+Change Drill 10;
+Pad 'V_7' Round 0 20 R0 (-31 0);
+Change Drill 10;
+Pad 'V_8' Round 0 20 R0 (-31 31);
+Change Drill 10;
+Pad 'V_9' Round 0 20 R0 (-31 62);
+Change Drill 10;
+Pad 'V_10' Round 0 20 R0 (0 -62);
+Change Drill 10;
+Pad 'V_11' Round 0 20 R0 (0 -31);
+Change Drill 10;
+Pad 'V_12' Round 0 20 R0 (0 0);
+Change Drill 10;
+Pad 'V_13' Round 0 20 R0 (0 31);
+Change Drill 10;
+Pad 'V_14' Round 0 20 R0 (0 62);
+Change Drill 10;
+Pad 'V_15' Round 0 20 R0 (31 -62);
+Change Drill 10;
+Pad 'V_16' Round 0 20 R0 (31 -31);
+Change Drill 10;
+Pad 'V_17' Round 0 20 R0 (31 0);
+Change Drill 10;
+Pad 'V_18' Round 0 20 R0 (31 31);
+Change Drill 10;
+Pad 'V_19' Round 0 20 R0 (31 62);
+Change Drill 10;
+Pad 'V_20' Round 0 20 R0 (62 -62);
+Change Drill 10;
+Pad 'V_21' Round 0 20 R0 (62 -31);
+Change Drill 10;
+Pad 'V_22' Round 0 20 R0 (62 0);
+Change Drill 10;
+Pad 'V_23' Round 0 20 R0 (62 31);
+Change Drill 10;
+Pad 'V_24' Round 0 20 R0 (62 62);
+Layer 21;
+Wire 6 (-156 -156) (-127 -156);
+Wire 6 (156 -156) (156 -127);
+Wire 6 (156 156) (127 156);
+Wire 6 (-156 156) (-156 127);
+Wire 6 (-156 -127) (-156 -156);
+Wire 6 (127 -156) (156 -156);
+Wire 6 (156 127) (156 156);
+Wire 6 (-127 156) (-156 156);
+Layer 21;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-173.541 -61.3976) (-173.541 -76.3976) (-163.541 -76.3976) (-163.541 -61.3976) (-173.541 -61.3976);
+Layer 21;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (22.035 -163.541) (22.035 -173.541) (37.035 -173.541) (37.035 -163.541) (22.035 -163.541);
+Layer 21;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (173.541 -2.3425) (173.541 -17.3425) (163.541 -17.3425) (163.541 -2.3425) (173.541 -2.3425);
+Layer 21;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (41.725 163.541) (41.725 173.541) (56.725 173.541) (56.725 163.541) (41.725 163.541);
+Change Size 50;
+Change Ratio 6;
+Text '*' SR0 (-201 108);
+Layer 31;
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-152.561 112.7977) (-152.561 103.7377) (-121.061 103.7377) (-121.061 112.7977) (-152.561 112.7977);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-152.561 93.1127) (-152.561 84.0527) (-121.061 84.0527) (-121.061 93.1127) (-152.561 93.1127);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-152.561 73.4276) (-152.561 64.3676) (-121.061 64.3676) (-121.061 73.4276) (-152.561 73.4276);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-152.561 53.7426) (-152.561 44.6826) (-121.061 44.6826) (-121.061 53.7426) (-152.561 53.7426);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-152.561 34.0576) (-152.561 24.9976) (-121.061 24.9976) (-121.061 34.0576) (-152.561 34.0576);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-152.561 14.3725) (-152.561 5.3125) (-121.061 5.3125) (-121.061 14.3725) (-152.561 14.3725);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-152.561 -5.3125) (-152.561 -14.3725) (-121.061 -14.3725) (-121.061 -5.3125) (-152.561 -5.3125);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-152.561 -24.9976) (-152.561 -34.0576) (-121.061 -34.0576) (-121.061 -24.9976) (-152.561 -24.9976);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-152.561 -44.6826) (-152.561 -53.7426) (-121.061 -53.7426) (-121.061 -44.6826) (-152.561 -44.6826);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-152.561 -64.3676) (-152.561 -73.4276) (-121.061 -73.4276) (-121.061 -64.3676) (-152.561 -64.3676);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-152.561 -84.0527) (-152.561 -93.1127) (-121.061 -93.1127) (-121.061 -84.0527) (-152.561 -84.0527);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-152.561 -103.7377) (-152.561 -112.7977) (-121.061 -112.7977) \
+    (-121.061 -103.7377) (-152.561 -103.7377);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-112.825 -121.061) (-112.825 -152.561) (-103.765 -152.561) (-103.765 -121.061) (-112.825 -121.061);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-93.135 -121.061) (-93.135 -152.561) (-84.075 -152.561) (-84.075 -121.061) (-93.135 -121.061);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-73.445 -121.061) (-73.445 -152.561) (-64.385 -152.561) (-64.385 -121.061) (-73.445 -121.061);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-53.755 -121.061) (-53.755 -152.561) (-44.695 -152.561) (-44.695 -121.061) (-53.755 -121.061);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-34.065 -121.061) (-34.065 -152.561) (-25.005 -152.561) (-25.005 -121.061) (-34.065 -121.061);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-14.375 -121.061) (-14.375 -152.561) (-5.315 -152.561) (-5.315 -121.061) (-14.375 -121.061);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (5.315 -121.061) (5.315 -152.561) (14.375 -152.561) (14.375 -121.061) (5.315 -121.061);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (25.005 -121.061) (25.005 -152.561) (34.065 -152.561) (34.065 -121.061) (25.005 -121.061);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (44.695 -121.061) (44.695 -152.561) (53.755 -152.561) (53.755 -121.061) (44.695 -121.061);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (64.385 -121.061) (64.385 -152.561) (73.445 -152.561) (73.445 -121.061) (64.385 -121.061);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (84.075 -121.061) (84.075 -152.561) (93.135 -152.561) (93.135 -121.061) (84.075 -121.061);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (103.765 -121.061) (103.765 -152.561) (112.825 -152.561) (112.825 -121.061) (103.765 -121.061);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (121.061 -103.7377) (121.061 -112.7977) (152.561 -112.7977) (152.561 -103.7377) (121.061 -103.7377);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (121.061 -84.0527) (121.061 -93.1127) (152.561 -93.1127) (152.561 -84.0527) (121.061 -84.0527);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (121.061 -64.3676) (121.061 -73.4276) (152.561 -73.4276) (152.561 -64.3676) (121.061 -64.3676);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (121.061 -44.6826) (121.061 -53.7426) (152.561 -53.7426) (152.561 -44.6826) (121.061 -44.6826);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (121.061 -24.9976) (121.061 -34.0576) (152.561 -34.0576) (152.561 -24.9976) (121.061 -24.9976);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (121.061 -5.3125) (121.061 -14.3725) (152.561 -14.3725) (152.561 -5.3125) (121.061 -5.3125);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (121.061 14.3725) (121.061 5.3125) (152.561 5.3125) (152.561 14.3725) (121.061 14.3725);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (121.061 34.0576) (121.061 24.9976) (152.561 24.9976) (152.561 34.0576) (121.061 34.0576);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (121.061 53.7426) (121.061 44.6826) (152.561 44.6826) (152.561 53.7426) (121.061 53.7426);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (121.061 73.4276) (121.061 64.3676) (152.561 64.3676) (152.561 73.4276) (121.061 73.4276);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (121.061 93.1127) (121.061 84.0527) (152.561 84.0527) (152.561 93.1127) (121.061 93.1127);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (121.061 112.7977) (121.061 103.7377) (152.561 103.7377) (152.561 112.7977) (121.061 112.7977);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (103.765 152.561) (103.765 121.061) (112.825 121.061) (112.825 152.561) (103.765 152.561);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (84.075 152.561) (84.075 121.061) (93.135 121.061) (93.135 152.561) (84.075 152.561);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (64.385 152.561) (64.385 121.061) (73.445 121.061) (73.445 152.561) (64.385 152.561);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (44.695 152.561) (44.695 121.061) (53.755 121.061) (53.755 152.561) (44.695 152.561);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (25.005 152.561) (25.005 121.061) (34.065 121.061) (34.065 152.561) (25.005 152.561);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (5.315 152.561) (5.315 121.061) (14.375 121.061) (14.375 152.561) (5.315 152.561);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-14.375 152.561) (-14.375 121.061) (-5.315 121.061) (-5.315 152.561) (-14.375 152.561);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-34.065 152.561) (-34.065 121.061) (-25.005 121.061) (-25.005 152.561) (-34.065 152.561);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-53.755 152.561) (-53.755 121.061) (-44.695 121.061) (-44.695 152.561) (-53.755 152.561);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-73.445 152.561) (-73.445 121.061) (-64.385 121.061) (-64.385 152.561) (-73.445 152.561);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-93.135 152.561) (-93.135 121.061) (-84.075 121.061) (-84.075 152.561) (-93.135 152.561);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-112.825 152.561) (-112.825 121.061) (-103.765 121.061) (-103.765 152.561) (-112.825 152.561);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-77.7586 77.7586) (-77.7586 65.937) (-71.5048 65.937) (-65.937 71.5048) \
+    (-65.937 77.7586) (-77.7586 77.7586);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-77.7586 58.063) (-77.7586 34.937) (-71.5048 34.937) (-65.937 40.5048) \
+    (-65.937 52.4952) (-71.5048 58.063) (-77.7586 58.063);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-77.7586 27.063) (-77.7586 3.937) (-71.5048 3.937) (-65.937 9.5048) \
+    (-65.937 21.4952) (-71.5048 27.063) (-77.7586 27.063);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-77.7586 -3.937) (-77.7586 -27.063) (-71.5048 -27.063) (-65.937 -21.4952) \
+    (-65.937 -9.5048) (-71.5048 -3.937) (-77.7586 -3.937);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-77.7586 -34.937) (-77.7586 -58.063) (-71.5048 -58.063) (-65.937 -52.4952) \
+    (-65.937 -40.5048) (-71.5048 -34.937) (-77.7586 -34.937);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-77.7586 -65.937) (-77.7586 -77.7586) (-65.937 -77.7586) (-65.937 -71.5048) \
+    (-71.5048 -65.937) (-77.7586 -65.937);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-58.063 77.7586) (-58.063 71.5048) (-52.4952 65.937) (-40.5048 65.937) \
+    (-34.937 71.5048) (-34.937 77.7586) (-58.063 77.7586);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-52.4952 58.063) (-58.063 52.4952) (-58.063 40.5048) (-52.4952 34.937) \
+    (-40.5048 34.937) (-34.937 40.5048) (-34.937 52.4952) (-40.5048 58.063) \
+    (-52.4952 58.063);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-52.4952 27.063) (-58.063 21.4952) (-58.063 9.5048) (-52.4952 3.937) \
+    (-40.5048 3.937) (-34.937 9.5048) (-34.937 21.4952) (-40.5048 27.063) \
+    (-52.4952 27.063);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-52.4952 -3.937) (-58.063 -9.5048) (-58.063 -21.4952) (-52.4952 -27.063) \
+    (-40.5048 -27.063) (-34.937 -21.4952) (-34.937 -9.5048) (-40.5048 -3.937) \
+    (-52.4952 -3.937);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-52.4952 -34.937) (-58.063 -40.5048) (-58.063 -52.4952) (-52.4952 -58.063) \
+    (-40.5048 -58.063) (-34.937 -52.4952) (-34.937 -40.5048) (-40.5048 -34.937) \
+    (-52.4952 -34.937);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-52.4952 -65.937) (-58.063 -71.5048) (-58.063 -77.7586) (-34.937 -77.7586) \
+    (-34.937 -71.5048) (-40.5048 -65.937) (-52.4952 -65.937);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-27.063 77.7586) (-27.063 71.5048) (-21.4952 65.937) (-9.5048 65.937) \
+    (-3.937 71.5048) (-3.937 77.7586) (-27.063 77.7586);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-21.4952 58.063) (-27.063 52.4952) (-27.063 40.5048) (-21.4952 34.937) \
+    (-9.5048 34.937) (-3.937 40.5048) (-3.937 52.4952) (-9.5048 58.063) \
+    (-21.4952 58.063);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-21.4952 27.063) (-27.063 21.4952) (-27.063 9.5048) (-21.4952 3.937) \
+    (-9.5048 3.937) (-3.937 9.5048) (-3.937 21.4952) (-9.5048 27.063) (-21.4952 27.063);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-21.4952 -3.937) (-27.063 -9.5048) (-27.063 -21.4952) (-21.4952 -27.063) \
+    (-9.5048 -27.063) (-3.937 -21.4952) (-3.937 -9.5048) (-9.5048 -3.937) \
+    (-21.4952 -3.937);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-21.4952 -34.937) (-27.063 -40.5048) (-27.063 -52.4952) (-21.4952 -58.063) \
+    (-9.5048 -58.063) (-3.937 -52.4952) (-3.937 -40.5048) (-9.5048 -34.937) \
+    (-21.4952 -34.937);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-21.4952 -65.937) (-27.063 -71.5048) (-27.063 -77.7586) (-3.937 -77.7586) \
+    (-3.937 -71.5048) (-9.5048 -65.937) (-21.4952 -65.937);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (3.937 77.7586) (3.937 71.5048) (9.5048 65.937) (21.4952 65.937) \
+    (27.063 71.5048) (27.063 77.7586) (3.937 77.7586);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (9.5048 58.063) (3.937 52.4952) (3.937 40.5048) (9.5048 34.937) \
+    (21.4952 34.937) (27.063 40.5048) (27.063 52.4952) (21.4952 58.063) \
+    (9.5048 58.063);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (9.5048 27.063) (3.937 21.4952) (3.937 9.5048) (9.5048 3.937) \
+    (21.4952 3.937) (27.063 9.5048) (27.063 21.4952) (21.4952 27.063) (9.5048 27.063);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (9.5048 -3.937) (3.937 -9.5048) (3.937 -21.4952) (9.5048 -27.063) \
+    (21.4952 -27.063) (27.063 -21.4952) (27.063 -9.5048) (21.4952 -3.937) \
+    (9.5048 -3.937);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (9.5048 -34.937) (3.937 -40.5048) (3.937 -52.4952) (9.5048 -58.063) \
+    (21.4952 -58.063) (27.063 -52.4952) (27.063 -40.5048) (21.4952 -34.937) \
+    (9.5048 -34.937);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (9.5048 -65.937) (3.937 -71.5048) (3.937 -77.7586) (27.063 -77.7586) \
+    (27.063 -71.5048) (21.4952 -65.937) (9.5048 -65.937);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (34.937 77.7586) (34.937 71.5048) (40.5048 65.937) (52.4952 65.937) \
+    (58.063 71.5048) (58.063 77.7586) (34.937 77.7586);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (40.5048 58.063) (34.937 52.4952) (34.937 40.5048) (40.5048 34.937) \
+    (52.4952 34.937) (58.063 40.5048) (58.063 52.4952) (52.4952 58.063) \
+    (40.5048 58.063);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (40.5048 27.063) (34.937 21.4952) (34.937 9.5048) (40.5048 3.937) \
+    (52.4952 3.937) (58.063 9.5048) (58.063 21.4952) (52.4952 27.063) (40.5048 27.063);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (40.5048 -3.937) (34.937 -9.5048) (34.937 -21.4952) (40.5048 -27.063) \
+    (52.4952 -27.063) (58.063 -21.4952) (58.063 -9.5048) (52.4952 -3.937) \
+    (40.5048 -3.937);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (40.5048 -34.937) (34.937 -40.5048) (34.937 -52.4952) (40.5048 -58.063) \
+    (52.4952 -58.063) (58.063 -52.4952) (58.063 -40.5048) (52.4952 -34.937) \
+    (40.5048 -34.937);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (40.5048 -65.937) (34.937 -71.5048) (34.937 -77.7586) (58.063 -77.7586) \
+    (58.063 -71.5048) (52.4952 -65.937) (40.5048 -65.937);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (65.937 77.7586) (65.937 71.5048) (71.5048 65.937) (77.7586 65.937) \
+    (77.7586 77.7586) (65.937 77.7586);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (71.5048 58.063) (65.937 52.4952) (65.937 40.5048) (71.5048 34.937) \
+    (77.7586 34.937) (77.7586 58.063) (71.5048 58.063);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (71.5048 27.063) (65.937 21.4952) (65.937 9.5048) (71.5048 3.937) \
+    (77.7586 3.937) (77.7586 27.063) (71.5048 27.063);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (71.5048 -3.937) (65.937 -9.5048) (65.937 -21.4952) (71.5048 -27.063) \
+    (77.7586 -27.063) (77.7586 -3.937) (71.5048 -3.937);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (71.5048 -34.937) (65.937 -40.5048) (65.937 -52.4952) (71.5048 -58.063) \
+    (77.7586 -58.063) (77.7586 -34.937) (71.5048 -34.937);
+Layer 31;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (71.5048 -65.937) (65.937 -71.5048) (65.937 -77.7586) (77.7586 -77.7586) \
+    (77.7586 -65.937) (71.5048 -65.937);
+Layer 29;
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-156.281 116.5177) (-156.281 100.0177) (-117.341 100.0177) (-117.341 116.5177) (-156.281 116.5177);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-156.281 96.8327) (-156.281 80.3327) (-117.341 80.3327) (-117.341 96.8327) (-156.281 96.8327);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-156.281 77.1476) (-156.281 60.6476) (-117.341 60.6476) (-117.341 77.1476) (-156.281 77.1476);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-156.281 57.4626) (-156.281 40.9626) (-117.341 40.9626) (-117.341 57.4626) (-156.281 57.4626);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-156.281 37.7776) (-156.281 21.2776) (-117.341 21.2776) (-117.341 37.7776) (-156.281 37.7776);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-156.281 18.0925) (-156.281 1.5925) (-117.341 1.5925) (-117.341 18.0925) (-156.281 18.0925);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-156.281 -1.5925) (-156.281 -18.0925) (-117.341 -18.0925) (-117.341 -1.5925) (-156.281 -1.5925);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-156.281 -21.2776) (-156.281 -37.7776) (-117.341 -37.7776) (-117.341 -21.2776) (-156.281 -21.2776);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-156.281 -40.9626) (-156.281 -57.4626) (-117.341 -57.4626) (-117.341 -40.9626) (-156.281 -40.9626);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-156.281 -60.6476) (-156.281 -77.1476) (-117.341 -77.1476) (-117.341 -60.6476) (-156.281 -60.6476);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-156.281 -80.3327) (-156.281 -96.8327) (-117.341 -96.8327) (-117.341 -80.3327) (-156.281 -80.3327);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-156.281 -100.0177) (-156.281 -116.5177) (-117.341 -116.5177) \
+    (-117.341 -100.0177) (-156.281 -100.0177);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-116.545 -117.341) (-116.545 -156.281) (-100.045 -156.281) (-100.045 -117.341) (-116.545 -117.341);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-96.855 -117.341) (-96.855 -156.281) (-80.355 -156.281) (-80.355 -117.341) (-96.855 -117.341);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-77.165 -117.341) (-77.165 -156.281) (-60.665 -156.281) (-60.665 -117.341) (-77.165 -117.341);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-57.475 -117.341) (-57.475 -156.281) (-40.975 -156.281) (-40.975 -117.341) (-57.475 -117.341);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-37.785 -117.341) (-37.785 -156.281) (-21.285 -156.281) (-21.285 -117.341) (-37.785 -117.341);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-18.095 -117.341) (-18.095 -156.281) (-1.595 -156.281) (-1.595 -117.341) (-18.095 -117.341);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (1.595 -117.341) (1.595 -156.281) (18.095 -156.281) (18.095 -117.341) (1.595 -117.341);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (21.285 -117.341) (21.285 -156.281) (37.785 -156.281) (37.785 -117.341) (21.285 -117.341);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (40.975 -117.341) (40.975 -156.281) (57.475 -156.281) (57.475 -117.341) (40.975 -117.341);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (60.665 -117.341) (60.665 -156.281) (77.165 -156.281) (77.165 -117.341) (60.665 -117.341);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (80.355 -117.341) (80.355 -156.281) (96.855 -156.281) (96.855 -117.341) (80.355 -117.341);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (100.045 -117.341) (100.045 -156.281) (116.545 -156.281) (116.545 -117.341) (100.045 -117.341);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (117.341 -100.0177) (117.341 -116.5177) (156.281 -116.5177) (156.281 -100.0177) (117.341 -100.0177);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (117.341 -80.3327) (117.341 -96.8327) (156.281 -96.8327) (156.281 -80.3327) (117.341 -80.3327);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (117.341 -60.6476) (117.341 -77.1476) (156.281 -77.1476) (156.281 -60.6476) (117.341 -60.6476);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (117.341 -40.9626) (117.341 -57.4626) (156.281 -57.4626) (156.281 -40.9626) (117.341 -40.9626);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (117.341 -21.2776) (117.341 -37.7776) (156.281 -37.7776) (156.281 -21.2776) (117.341 -21.2776);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (117.341 -1.5925) (117.341 -18.0925) (156.281 -18.0925) (156.281 -1.5925) (117.341 -1.5925);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (117.341 18.0925) (117.341 1.5925) (156.281 1.5925) (156.281 18.0925) (117.341 18.0925);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (117.341 37.7776) (117.341 21.2776) (156.281 21.2776) (156.281 37.7776) (117.341 37.7776);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (117.341 57.4626) (117.341 40.9626) (156.281 40.9626) (156.281 57.4626) (117.341 57.4626);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (117.341 77.1476) (117.341 60.6476) (156.281 60.6476) (156.281 77.1476) (117.341 77.1476);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (117.341 96.8327) (117.341 80.3327) (156.281 80.3327) (156.281 96.8327) (117.341 96.8327);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (117.341 116.5177) (117.341 100.0177) (156.281 100.0177) (156.281 116.5177) (117.341 116.5177);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (100.045 156.281) (100.045 117.341) (116.545 117.341) (116.545 156.281) (100.045 156.281);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (80.355 156.281) (80.355 117.341) (96.855 117.341) (96.855 156.281) (80.355 156.281);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (60.665 156.281) (60.665 117.341) (77.165 117.341) (77.165 156.281) (60.665 156.281);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (40.975 156.281) (40.975 117.341) (57.475 117.341) (57.475 156.281) (40.975 156.281);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (21.285 156.281) (21.285 117.341) (37.785 117.341) (37.785 156.281) (21.285 156.281);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (1.595 156.281) (1.595 117.341) (18.095 117.341) (18.095 156.281) (1.595 156.281);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-18.095 156.281) (-18.095 117.341) (-1.595 117.341) (-1.595 156.281) (-18.095 156.281);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-37.785 156.281) (-37.785 117.341) (-21.285 117.341) (-21.285 156.281) (-37.785 156.281);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-57.475 156.281) (-57.475 117.341) (-40.975 117.341) (-40.975 156.281) (-57.475 156.281);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-77.165 156.281) (-77.165 117.341) (-60.665 117.341) (-60.665 156.281) (-77.165 156.281);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-96.855 156.281) (-96.855 117.341) (-80.355 117.341) (-80.355 156.281) (-96.855 156.281);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-116.545 156.281) (-116.545 117.341) (-100.045 117.341) (-100.045 156.281) (-116.545 156.281);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-83.2086 83.2086) (83.2086 83.2086) (83.2086 69.874) (-83.2086 69.874) (-83.2086 83.2086);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-83.2086 54.126) (83.2086 54.126) (83.2086 38.874) (-83.2086 38.874) (-83.2086 54.126);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-83.2086 23.126) (83.2086 23.126) (83.2086 7.874) (-83.2086 7.874) (-83.2086 23.126);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-83.2086 -7.874) (83.2086 -7.874) (83.2086 -23.126) (-83.2086 -23.126) (-83.2086 -7.874);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-83.2086 -38.874) (83.2086 -38.874) (83.2086 -54.126) (-83.2086 -54.126) (-83.2086 -38.874);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-83.2086 -69.874) (83.2086 -69.874) (83.2086 -83.2086) (-83.2086 -83.2086) (-83.2086 -69.874);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-83.2086 83.2086) (-69.874 83.2086) (-69.874 -83.2086) (-83.2086 -83.2086) (-83.2086 83.2086);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-38.874 83.2086) (-54.126 83.2086) (-54.126 -83.2086) (-38.874 -83.2086) (-38.874 83.2086);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (-7.874 83.2086) (-23.126 83.2086) (-23.126 -83.2086) (-7.874 -83.2086) (-7.874 83.2086);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (23.126 83.2086) (7.874 83.2086) (7.874 -83.2086) (23.126 -83.2086) (23.126 83.2086);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (54.126 83.2086) (38.874 83.2086) (38.874 -83.2086) (54.126 -83.2086) (54.126 83.2086);
+Layer 29;
+Change Spacing 50;
+Change Pour solid;
+Polygon 1  (69.874 83.2086) (83.2086 83.2086) (83.2086 -83.2086) (69.874 -83.2086) (69.874 83.2086);
+Layer 51;
+Wire 6 (-141 91) (-91 141);
+Wire 6 (-141 -141) (141 -141);
+Wire 6 (141 -141) (141 141);
+Wire 6 (141 141) (-141 141);
+Wire 6 (-141 141) (-141 -141);
+Change Size 50;
+Change Ratio 6;
+Text '*' SR0 (-133 93);
+Layer 25;
+Change Size 50;
+Change Ratio 6;
+Text '>Name' SR0 (-129 -25);
+Layer 27;
+
+Edit 'MSP430FR59691IRGZR.sym';
+Layer 94;
+Pin 'P1.0/TA0.1/DMAE0/RTCCLK/A0/C0/VREF-/VeREF-' I/O None Middle R0 Both 0 (100 0)
+Pin 'P1.1/TA0.2/TA1CLK/COUT/A1/C1/VREF+/VeREF+' I/O None Middle R0 Both 0 (100 -100)
+Pin 'P1.2/TA1.1/TA0CLK/COUT/A2/C2' I/O None Middle R0 Both 0 (100 -200)
+Pin 'P3.0/A12/C12' I/O None Middle R0 Both 0 (100 -300)
+Pin 'P3.1/A13/C13' I/O None Middle R0 Both 0 (100 -400)
+Pin 'P3.2/A14/C14' I/O None Middle R0 Both 0 (100 -500)
+Pin 'P3.3/A15/C15' I/O None Middle R0 Both 0 (100 -600)
+Pin 'P4.7' I/O None Middle R0 Both 0 (100 -700)
+Pin 'P1.3/TA1.2/UCB0STE/A3/C3' I/O None Middle R0 Both 0 (100 -800)
+Pin 'P1.4/TB0.1/UCA0STE/A4/C4' I/O None Middle R0 Both 0 (100 -900)
+Pin 'P1.5/TB0.2/UCA0CLK/A5/C5' I/O None Middle R0 Both 0 (100 -1000)
+Pin 'PJ.0/TDO/TB0OUTH/SMCLK/SRSCG1/C6' I/O None Middle R0 Both 0 (100 -1100)
+Pin 'PJ.1/TDI/TCLK/MCLK/SRSCG0/C7' I/O None Middle R0 Both 0 (100 -1200)
+Pin 'PJ.2/TMS/ACLK/SROSCOFF/C8' I/O None Middle R0 Both 0 (100 -1300)
+Pin 'PJ.3/TCK/SRCPUOFF/C9' I/O None Middle R0 Both 0 (100 -1400)
+Pin 'P4.0/A8' I/O None Middle R0 Both 0 (100 -1500)
+Pin 'P4.1/A9' I/O None Middle R0 Both 0 (100 -1600)
+Pin 'P4.2/A10' I/O None Middle R0 Both 0 (100 -1700)
+Pin 'P4.3/A11' I/O None Middle R0 Both 0 (100 -1800)
+Pin 'P2.5/TB0.0/UCA1TXD/UCA1SIMO' I/O None Middle R0 Both 0 (100 -1900)
+Pin 'P2.6/TB0.1/UCA1RXD/UCA1SOMI' I/O None Middle R0 Both 0 (100 -2000)
+Pin 'TEST/SBWTCK' In None Middle R0 Both 0 (100 -2100)
+Pin '!RST/NMI/SBWTDIO' I/O None Middle R0 Both 0 (100 -2200)
+Pin 'P2.0/TB0.6/UCA0TXD/UCA0SIMO/TB0CLK/ACLK' I/O None Middle R0 Both 0 (100 -2300)
+Pin 'P2.1/TB0.0/UCA0RXD/UCA0SOMI/TB0.0' I/O None Middle R180 Both 0 (7100 -2400)
+Pin 'P2.2/TB0.2/UCB0CLK' I/O None Middle R180 Both 0 (7100 -2300)
+Pin 'P3.4/TB0.3/SMCLK' I/O None Middle R180 Both 0 (7100 -2200)
+Pin 'P3.5/TB0.4/COUT' I/O None Middle R180 Both 0 (7100 -2100)
+Pin 'P3.6/TB0.5' I/O None Middle R180 Both 0 (7100 -2000)
+Pin 'P3.7/TB0.6' I/O None Middle R180 Both 0 (7100 -1900)
+Pin 'P1.6/TB0.3/UCB0SIMO/UCB0SDA/TA0.0' I/O None Middle R180 Both 0 (7100 -1800)
+Pin 'P1.7/TB0.4/UCB0SOMI/UCB0SCL/TA1.0' I/O None Middle R180 Both 0 (7100 -1700)
+Pin 'P4.4/TB0.5' I/O None Middle R180 Both 0 (7100 -1600)
+Pin 'P4.5' I/O None Middle R180 Both 0 (7100 -1500)
+Pin 'P4.6' I/O None Middle R180 Both 0 (7100 -1400)
+Pin 'DVSS' Pwr None Middle R180 Both 0 (7100 -1300)
+Pin 'DVCC' Pwr None Middle R180 Both 0 (7100 -1200)
+Pin 'P2.7' I/O None Middle R180 Both 0 (7100 -1100)
+Pin 'P2.3/TA0.0/UCA1STE/A6/C10' I/O None Middle R180 Both 0 (7100 -1000)
+Pin 'P2.4/TA1.0/UCA1CLK/A7/C11' I/O None Middle R180 Both 0 (7100 -900)
+Pin 'AVSS_2' Pwr None Middle R180 Both 0 (7100 -800)
+Pin 'PJ.6/HFXIN' I/O None Middle R180 Both 0 (7100 -700)
+Pin 'PJ.7/HFXOUT' I/O None Middle R180 Both 0 (7100 -600)
+Pin 'AVSS_3' Pwr None Middle R180 Both 0 (7100 -500)
+Pin 'PJ.4/LFXIN' I/O None Middle R180 Both 0 (7100 -400)
+Pin 'PJ.5/LFXOUT' I/O None Middle R180 Both 0 (7100 -300)
+Pin 'AVSS' Pwr None Middle R180 Both 0 (7100 -200)
+Pin 'AVCC' Pwr None Middle R180 Both 0 (7100 -100)
+Pin 'EPAD' Pas None Middle R180 Both 0 (7100 0)
+Wire 6 (300 200) (300 -2600);
+Wire 6 (300 -2600) (6900 -2600);
+Wire 6 (6900 -2600) (6900 200);
+Wire 6 (6900 200) (300 200);
+Layer 97;
+Layer 95;
+Change Size 82;
+Change Ratio 6;
+Text '>Name' SR0 (3414 359);
+Layer 96;
+Change Size 82;
+Change Ratio 6;
+Text '>Value' SR0 (3389 259);
+
+Edit 'MSP430FR59691IRGZR.dev';
+Prefix 'U';
+Description '';
+Value Off;
+Add MSP430FR59691IRGZR 'A' Next  0 (0 0);
+Package 'RGZ48_4P1X4P1';
+Technology '';
+Attribute Vendor 'Texas Instruments';
+Attribute Manufacturer_Part_Number 'MSP430FR59691IRGZR';
+Connect 'A.P1.0/TA0.1/DMAE0/RTCCLK/A0/C0/VREF-/VeREF-' '1';
+Connect 'A.P1.1/TA0.2/TA1CLK/COUT/A1/C1/VREF+/VeREF+' '2';
+Connect 'A.P1.2/TA1.1/TA0CLK/COUT/A2/C2' '3';
+Connect 'A.P3.0/A12/C12' '4';
+Connect 'A.P3.1/A13/C13' '5';
+Connect 'A.P3.2/A14/C14' '6';
+Connect 'A.P3.3/A15/C15' '7';
+Connect 'A.P4.7' '8';
+Connect 'A.P1.3/TA1.2/UCB0STE/A3/C3' '9';
+Connect 'A.P1.4/TB0.1/UCA0STE/A4/C4' '10';
+Connect 'A.P1.5/TB0.2/UCA0CLK/A5/C5' '11';
+Connect 'A.PJ.0/TDO/TB0OUTH/SMCLK/SRSCG1/C6' '12';
+Connect 'A.PJ.1/TDI/TCLK/MCLK/SRSCG0/C7' '13';
+Connect 'A.PJ.2/TMS/ACLK/SROSCOFF/C8' '14';
+Connect 'A.PJ.3/TCK/SRCPUOFF/C9' '15';
+Connect 'A.P4.0/A8' '16';
+Connect 'A.P4.1/A9' '17';
+Connect 'A.P4.2/A10' '18';
+Connect 'A.P4.3/A11' '19';
+Connect 'A.P2.5/TB0.0/UCA1TXD/UCA1SIMO' '20';
+Connect 'A.P2.6/TB0.1/UCA1RXD/UCA1SOMI' '21';
+Connect 'A.TEST/SBWTCK' '22';
+Connect 'A.!RST/NMI/SBWTDIO' '23';
+Connect 'A.P2.0/TB0.6/UCA0TXD/UCA0SIMO/TB0CLK/ACLK' '24';
+Connect 'A.P2.1/TB0.0/UCA0RXD/UCA0SOMI/TB0.0' '25';
+Connect 'A.P2.2/TB0.2/UCB0CLK' '26';
+Connect 'A.P3.4/TB0.3/SMCLK' '27';
+Connect 'A.P3.5/TB0.4/COUT' '28';
+Connect 'A.P3.6/TB0.5' '29';
+Connect 'A.P3.7/TB0.6' '30';
+Connect 'A.P1.6/TB0.3/UCB0SIMO/UCB0SDA/TA0.0' '31';
+Connect 'A.P1.7/TB0.4/UCB0SOMI/UCB0SCL/TA1.0' '32';
+Connect 'A.P4.4/TB0.5' '33';
+Connect 'A.P4.5' '34';
+Connect 'A.P4.6' '35';
+Connect 'A.DVSS' '36';
+Connect 'A.DVCC' '37';
+Connect 'A.P2.7' '38';
+Connect 'A.P2.3/TA0.0/UCA1STE/A6/C10' '39';
+Connect 'A.P2.4/TA1.0/UCA1CLK/A7/C11' '40';
+Connect 'A.AVSS_2' '41';
+Connect 'A.PJ.6/HFXIN' '42';
+Connect 'A.PJ.7/HFXOUT' '43';
+Connect 'A.AVSS_3' '44';
+Connect 'A.PJ.4/LFXIN' '45';
+Connect 'A.PJ.5/LFXOUT' '46';
+Connect 'A.AVSS' '47';
+Connect 'A.AVCC' '48';
+Connect 'A.EPAD' '49';
